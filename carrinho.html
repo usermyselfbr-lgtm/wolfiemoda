@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meu carrinho — Wolfie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<meta name="description" content="Complete 12 peças variadas e libere o preço de fábrica.">
+<meta name="theme-color" content="#ffffff">
+<meta name="author" content="Wolfie">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/favicon.svg">
+<link rel="canonical" href="https://SEU-USUARIO.github.io/wolfie/carrinho.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Wolfie">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Meu carrinho — Wolfie">
+<meta property="og:description" content="Complete 12 peças variadas e libere o preço de fábrica.">
+<meta property="og:url" content="https://SEU-USUARIO.github.io/wolfie/carrinho.html">
+<meta property="og:image" content="https://SEU-USUARIO.github.io/wolfie/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Meu carrinho — Wolfie">
+<meta name="twitter:description" content="Complete 12 peças variadas e libere o preço de fábrica.">
+<meta name="twitter:image" content="https://SEU-USUARIO.github.io/wolfie/assets/og.jpg">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="track">
+    <span><b>FRETE GRÁTIS</b> (PAC) PARA COMPRAS ACIMA DE R$ 399,90 <b>(VAREJO)</b></span>
+    <span><b>ATACADO:</b> PREÇO DE FÁBRICA ACIMA DE 12 PEÇAS VARIADAS</span>
+    <span><b>FRETE GRÁTIS</b> (PAC) PARA COMPRAS ACIMA DE R$ 399,90 <b>(VAREJO)</b></span>
+    <span><b>ATACADO:</b> PREÇO DE FÁBRICA ACIMA DE 12 PEÇAS VARIADAS</span>
+  </div>
+</div>
+
+<header class="header">
+  <div class="wrap header__in">
+    <button class="burger-mob" data-open-menu aria-label="Menu"><svg width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+    <a href="index.html" class="logo"><span class="logo__mark">W</span><span class="logo__txt">WOLFIE</span></a>
+    <form class="search" onsubmit="return false">
+      <input type="search" placeholder="O que está buscando?" aria-label="Buscar">
+      <button aria-label="Buscar"><svg width="17" height="17" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4" fill="none"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg></button>
+    </form>
+    <nav class="icons">
+      <a href="#" aria-label="Minha conta"><svg width="21" height="21" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7" fill="none"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></a>
+      <a href="#" aria-label="Lojas"><svg width="21" height="21" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7" fill="none"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></a>
+      <a href="carrinho.html" aria-label="Sacola"><svg width="21" height="21" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7" fill="none"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg><i class="badge" data-cart-count>0</i></a>
+    </nav>
+  </div>
+  <div class="nav">
+    <div class="wrap nav__in">
+      <div class="nav__item"><a href="colecao.html" class="nav__burger"><svg width="15" height="15" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><path d="M3 6h18M3 12h18M3 18h18"/></svg> Lançamentos</a></div>
+      <div class="nav__item"><a href="colecao.html">Beachwear</a></div>
+      <div class="nav__item"><a href="colecao.html">Fitness</a></div>
+      <div class="nav__item"><a href="colecao.html">Produtos</a></div>
+      <div class="nav__item"><a href="colecao.html">Sale</a></div>
+    </div>
+  </div>
+  <div class="rainbow"></div>
+</header>
+
+<main class="wrap cart">
+  <div>
+    <h1>Meu carrinho</h1>
+
+    <!-- barra de progresso do atacado -->
+    <div class="wholesale" id="wholesale">
+      <span class="wholesale__count" id="w-count">0/12</span>
+      <div class="wholesale__top">
+        <span class="wholesale__ic" data-ic="cart"></span>
+        <div class="wholesale__txt">
+          <b id="w-txt">Faltam <i>12 peças</i> para atacado</b>
+          <span id="w-sub">Adicione mais itens e economize!</span>
+        </div>
+      </div>
+      <div class="bar"><i id="w-bar"></i></div>
+      <div class="wholesale__meta"><span id="w-now">0 peças</span><span>Meta: 12 peças</span></div>
+    </div>
+
+    <div class="cart-list">
+      <div class="cart-list__h">Produto</div>
+      <div id="cart-list"></div>
+    </div>
+  </div>
+
+  <aside class="summary">
+    <div class="summary__box">
+      <div class="summary__row"><span>Total</span><b data-cart-total>R$ 0,00</b></div>
+      <a href="checkout.html"><button class="btn-dark">FINALIZAR COMPRA</button></a>
+      <a href="colecao.html"><button class="btn-ghost">CONTINUAR COMPRANDO</button></a>
+      <div class="safe">
+        <h6><i data-ic="lock"></i> Pagamento Seguro</h6>
+        <div class="pays">
+          <span class="pay">PIX</span><span class="pay">AMEX</span><span class="pay">ELO</span><span class="pay">MASTER</span><span class="pay">VISA</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<div class="perks">
+  <div class="wrap perks__in">
+    <div class="perks__i"><i data-ic="ticket"></i> cupom WOLFIE10</div><div class="perks__i"><i data-ic="card"></i> Pague em até 6x sem juros</div>
+    <div class="perks__i"><i data-ic="mail"></i> 5% de desconto</div><div class="perks__i"><i data-ic="cart"></i> Satisfação ou Reembolso</div>
+  </div>
+</div>
+<div class="rainbow"></div>
+
+<footer class="footer">
+  <div class="wrap">
+    <p class="legal" style="margin-top:24px">® <b>WOLFIE</b> – 2026 Preços e condições de pagamento exclusivos para compras via internet. Os descontos e promoções não são válidos para clientes atacadistas.
+    <span class="cnpj">© Wolfie | CNPJ: 00.000.000/0001-00 · Goiânia/GO</span></p>
+  </div>
+</footer>
+
+<!-- ░░ MODAL DE POLÍTICA (dispara ao abrir o carrinho) ░░ -->
+<div class="ov" id="policy">
+  <div class="modal">
+    <button class="x" data-close>×</button>
+    <h3>Atenção!</h3>
+    <p><i data-ic="info"></i> Política de Troca – Peças Promocionais. As peças adquiridas em promoção, liquidação, ofertas especiais ou campanhas promocionais não estão sujeitas à troca ou devolução por arrependimento, conforme as condições da oferta. Caso o produto apresente defeito de fabricação, a solicitação será analisada de acordo com as normas previstas no Código de Defesa do Consumidor. Ao finalizar sua compra, você declara estar ciente e de acordo com esta política.</p>
+    <button class="ok" data-close>Entendi</button>
+  </div>
+</div>
+
+<a href="#" class="coupon-tab"><i data-ic="ticket"></i> CUPOM</a>
+<a href="https://wa.me/5562999990000" target="_blank" rel="noopener noreferrer" class="wpp-float" aria-label="Falar no WhatsApp"><i data-ic="wpp"></i></a>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer">
+  <div class="drawer__h"><span class="logo"><span class="logo__mark">W</span><span class="logo__txt">WOLFIE</span></span><button data-close-menu style="font-size:22px">×</button></div>
+  <div class="drawer__l">
+    <a href="colecao.html">Lançamentos <span>›</span></a><a href="colecao.html">Seamless <span>›</span></a>
+    <a href="colecao.html">Peach Fuzz <span>›</span></a><a href="colecao.html">Selvagem <span>›</span></a>
+    <a href="carrinho.html">Comprar no atacado <span>›</span></a>
+  </div>
+</aside>
+
+<script src="assets/js/app.js"></script>
+</body>
+</html>
