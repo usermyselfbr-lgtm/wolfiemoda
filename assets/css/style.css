@@ -107,9 +107,16 @@ section{padding-block:46px}
 .header__in{display:flex;align-items:center;gap:26px;padding-block:14px}
 
 .logo{display:flex;align-items:center;gap:9px;flex-shrink:0}
-.logo__mark{width:34px;height:34px;border:2.5px solid var(--ink);display:grid;place-items:center;
-  font-weight:800;font-size:17px;line-height:1;border-radius:3px}
-.logo__txt{font-weight:800;font-size:17px;line-height:1;letter-spacing:.15em}
+.logo{gap:11px}
+.logo__mark{width:38px;height:38px;flex:0 0 auto;border-radius:9px;overflow:hidden;
+  box-shadow:0 3px 10px rgba(17,17,17,.18);display:block;transition:var(--t)}
+.logo__mark img{width:100%;height:100%;object-fit:cover;display:block}
+.logo:hover .logo__mark{transform:rotate(-3deg) scale(1.04)}
+.logo__word{height:30px;width:auto;display:block}
+.header.is-stuck .logo__mark{width:32px;height:32px}
+.header.is-stuck .logo__word{height:26px}
+.footer .logo__word,.drawer .logo__word{height:28px}
+.ck-head .logo__word{height:28px}
 
 .search{flex:1;position:relative;max-width:640px}
 .search input{width:100%;height:42px;border:0;background:var(--soft-2);border-radius:99px;
@@ -382,7 +389,6 @@ section{padding-block:46px}
 .cep-link{display:inline-block;margin-top:10px;font-size:12px;color:var(--amber);text-decoration:underline}
 .cep-out{margin-top:14px;font-size:13px;display:none}
 .cep-out.is-on{display:block}
-.cep-out div{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed var(--line)}
 
 .buy h1{font-size:26px;font-weight:600;letter-spacing:.03em;padding-bottom:14px;border-bottom:1px solid var(--line)}
 .opt{margin-top:20px}
@@ -950,3 +956,261 @@ body.checkout{background:linear-gradient(180deg,#f8f8f9,#f4f5f7)}
 /* WhatsApp */
 .social__wa::before{background:linear-gradient(160deg,#5df58a,#25d366 45%,#128c50)}
 .social__wa:hover{box-shadow:0 10px 26px rgba(37,211,102,.45)}
+
+/* ==========================================================================
+   22. LINHA WOLFIE — grid de 5, chamada de atacado na PDP e nota da PLP
+   ========================================================================== */
+.grid--5{grid-template-columns:repeat(5,1fr);gap:18px}
+.grid--5 .card__name{font-size:11.5px;min-height:44px}
+.grid--5 .card__prices{gap:12px}
+.grid--5 .card__col h6{font-size:9px;letter-spacing:.1em}
+.grid--5 .card__col .now{font-size:14px}
+.grid--5 .card__col .pix{font-size:10px}
+.grid--5 .card__inst{font-size:10.5px}
+
+/* aviso de preço de atacado na página de produto */
+.wholesale-hint{display:flex;gap:12px;align-items:center;margin-top:18px;padding:13px 15px;border-radius:10px;
+  background:linear-gradient(120deg,#fffaf0,#fff4e0);border:1px solid #f4e2bd}
+.wholesale-hint>[data-ic]{width:32px;height:32px;border-radius:8px;flex:0 0 auto;color:#5a2408;
+  background:var(--grad-warm);display:grid;place-items:center}
+.wholesale-hint [data-ic] svg{width:16px;height:16px}
+.wholesale-hint b{display:block;font-size:13.5px;color:#8a5a05}
+.wholesale-hint span{font-size:12px;color:#a07430;line-height:1.4}
+
+/* faixa de chamada no fim da listagem */
+.plp-note{margin-top:34px;padding:26px 30px;border-radius:14px;display:flex;align-items:center;gap:18px;
+  flex-wrap:wrap;background:linear-gradient(120deg,#f7f7f8,#f1f2f3);border:1px solid #ececed}
+.plp-note b{font-size:15px;font-weight:700}
+.plp-note span{font-size:13.5px;color:var(--ink-2);flex:1;min-width:260px}
+.plp-note .btn-pill{height:44px;padding:0 26px}
+
+/* o bloco escuro de atacado herda o layout do bloco de destaque */
+.fitness__hero .in p{margin-top:-4px}
+
+@media (max-width:1024px){
+  .grid--5{grid-template-columns:repeat(3,1fr)}
+}
+@media (max-width:760px){
+  .grid--5{grid-template-columns:repeat(2,1fr);gap:14px}
+  .plp-note{padding:20px;flex-direction:column;align-items:flex-start}
+}
+
+/* ==========================================================================
+   23. FRETE — endereço, opções e estados
+   ========================================================================== */
+.cep button:disabled{opacity:.65;cursor:progress}
+.cep-out{margin-top:16px}
+
+.frete-end{display:flex;gap:11px;align-items:flex-start;padding:12px 14px;border-radius:9px;
+  background:linear-gradient(120deg,#f6f8f7,#f1f5f3);border:1px solid #e8eeea;margin-bottom:14px}
+.frete-end>[data-ic]{width:28px;height:28px;border-radius:8px;flex:0 0 auto;color:#0b3d22;
+  background:var(--grad-brand);display:grid;place-items:center}
+.frete-end [data-ic] svg{width:15px;height:15px}
+.frete-end b{display:block;font-size:13px;font-weight:600;line-height:1.35}
+.frete-end span{font-size:12px;color:var(--muted)}
+
+.frete-ops{display:grid;gap:8px}
+.frete-ops li{display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:12px 14px;border:1px solid var(--line);border-radius:9px;transition:var(--t)}
+.frete-ops li:hover{border-color:#cfcfd2;box-shadow:var(--e1)}
+.frete-ops li.is-free{border-color:#bbf0d0;background:linear-gradient(120deg,#f4fdf7,#ecfbf1)}
+.frete-ops__n b{display:block;font-size:13.5px;font-weight:700;letter-spacing:.02em}
+.frete-ops__n span{font-size:11.5px;color:var(--muted)}
+.frete-ops__p{text-align:right;line-height:1.35}
+.frete-ops__p b{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums}
+.frete-ops li.is-free .frete-ops__p b{color:var(--green)}
+.frete-ops__p s{font-size:11.5px;color:var(--muted);margin-left:5px}
+.frete-ops__p span{display:block;font-size:11.5px;color:var(--muted)}
+
+.frete-meta{margin-top:12px;font-size:11.5px;color:var(--muted);line-height:1.6}
+.frete-meta b{color:var(--price)}
+
+.frete-msg{font-size:13px;padding:11px 13px;border-radius:8px;display:flex;align-items:center;gap:9px}
+.frete-msg.erro{background:#fdf0ef;color:#a3372a;border:1px solid #f7d9d5}
+.frete-msg.load{background:var(--soft);color:var(--ink-2)}
+.frete-load{width:14px;height:14px;border:2px solid #d8d8dc;border-top-color:var(--green);
+  border-radius:50%;display:inline-block;animation:spin .7s linear infinite;flex:0 0 auto}
+
+/* o simulador no carrinho ocupa a coluna da lista */
+.cart .box{margin-top:22px}
+
+/* ==========================================================================
+   24. NÍVEL E-COMMERCE — cores de ação, conversão, performance e mobile
+   Referência de mercado: Zara, Amaro, Farfetch, Renner, Shein.
+   O CTA primário passa a ser preto (contraste 18,9:1 contra 1,8:1 do verde).
+   O verde vira sinal exclusivo de economia: PIX, frete grátis, atacado.
+   ========================================================================== */
+
+:root{
+  --cta:#111111;            /* ação primária */
+  --cta-h:#000000;
+  --cta-txt:#ffffff;
+  --save:#0b7a3d;           /* economia: PIX, frete grátis */
+  --save-bg:#eefaf2;
+  --sale:#d1354a;           /* liquidação */
+  --sale-bg:#fdeef0;
+  --stock:#b45309;          /* estoque baixo */
+  --bar-h:0px;              /* altura da barra fixa de compra (mobile) */
+}
+
+/* ---------- 24.1 ações ---------- */
+.cta-buy,.btn-dark,.modal .ok,.modal--wide .cta,.pop__yes,.seg button.is-on,.chip.is-on{
+  background:var(--cta);color:var(--cta-txt);border-color:var(--cta)}
+.cta-buy{box-shadow:0 8px 24px rgba(17,17,17,.24)}
+.cta-buy:hover,.btn-dark:hover{background:var(--cta-h);filter:none;box-shadow:0 12px 32px rgba(17,17,17,.3)}
+.cta-buy::after{background:linear-gradient(105deg,transparent 38%,rgba(255,255,255,.22) 50%,transparent 62%)}
+.pop__yes:hover{background:var(--cta-h)}
+
+/* botão sobre foto: branco (padrão editorial) */
+.duo__ov .btn-pill,.fitness__hero .btn-pill{background:#fff;color:#111;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.duo__ov .btn-pill:hover,.fitness__hero .btn-pill:hover{background:#fff;transform:translateY(-2px) scale(1.02)}
+/* botão de economia (frete/atacado) segue verde, agora com contraste AA */
+.plp-note .btn-pill,.coupon-tab{background:var(--save);color:#fff}
+.plp-note .btn-pill:hover{background:#0a6b35}
+.card__quick:hover{background:var(--cta);color:#fff}
+
+/* sinais de economia */
+.price-pix,.pix-pill{color:var(--save)}
+.price-pix{background:var(--save-bg)}
+.card__col .pix{color:var(--save)}
+.cart-item__i em,.ck-total span,.frete-ops li.is-free .frete-ops__p b{color:var(--save)}
+.ck-total span{background:none;-webkit-text-fill-color:var(--save)}
+.card__tag{background:var(--sale);color:#fff}
+.card__col .old,.price-was{color:#9a9a9a}
+.off-badge{background:var(--sale)}
+
+/* ---------- 24.2 barra fixa de compra (PDP) ---------- */
+.buybar{position:fixed;left:0;right:0;bottom:0;z-index:70;background:rgba(255,255,255,.97);
+  backdrop-filter:var(--glass);border-top:1px solid var(--line);box-shadow:0 -6px 24px rgba(17,17,17,.09);
+  transform:translateY(110%);transition:transform .3s cubic-bezier(.2,.7,.2,1);
+  padding:10px 0 calc(10px + env(safe-area-inset-bottom))}
+.buybar.is-on{transform:none}
+.buybar__in{display:flex;align-items:center;gap:14px}
+.buybar .ph{width:46px;flex:0 0 46px;border-radius:6px;aspect-ratio:3/4}
+.buybar__i{flex:1;min-width:0}
+.buybar__i b{display:block;font-size:12.5px;font-weight:700;letter-spacing:.02em;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis}
+.buybar__i span{font-size:12px;color:var(--muted)}
+.buybar__i em{font-style:normal;font-size:15px;font-weight:700;font-variant-numeric:tabular-nums}
+.buybar__cta{height:46px;padding:0 26px;border-radius:99px;background:var(--cta);color:#fff;
+  font-size:14px;font-weight:600;flex:0 0 auto;transition:var(--t)}
+.buybar__cta:hover{background:var(--cta-h);transform:translateY(-1px)}
+.buybar__sz{display:flex;gap:6px}
+.buybar__sz button{width:38px;height:38px;border:1px solid var(--line);border-radius:8px;font-size:12.5px;
+  font-weight:600;transition:var(--t)}
+.buybar__sz button.is-on{background:var(--cta);color:#fff;border-color:var(--cta)}
+
+/* ---------- 24.3 mini-carrinho (gaveta) ---------- */
+.mini{position:fixed;inset:0 0 0 auto;width:min(92vw,410px);background:#fff;z-index:130;display:flex;
+  flex-direction:column;transform:translateX(100%);transition:transform .34s cubic-bezier(.2,.7,.2,1);
+  box-shadow:-18px 0 50px rgba(17,17,17,.18)}
+.mini.is-on{transform:none}
+.mini__h{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid var(--line)}
+.mini__h b{font-size:15px;font-weight:700}
+.mini__h button{width:34px;height:34px;border-radius:50%;font-size:20px;color:var(--muted);transition:var(--t)}
+.mini__h button:hover{background:var(--soft);color:var(--ink)}
+.mini__goals{padding:14px 20px;border-bottom:1px solid var(--line);display:grid;gap:12px}
+.goal b{font-size:12px;font-weight:600;display:block;margin-bottom:6px}
+.goal b i{font-style:normal;color:var(--sale)}
+.goal.is-done b{color:var(--save)}
+.goal .track2{height:6px;border-radius:99px;background:#eee;overflow:hidden}
+.goal .track2 i{display:block;height:100%;border-radius:99px;background:var(--cta);width:0;
+  transition:width .6s cubic-bezier(.2,.7,.2,1)}
+.goal.is-done .track2 i{background:var(--save)}
+.mini__list{flex:1;overflow:auto;padding:6px 20px}
+.mini__i{display:flex;gap:13px;padding:14px 0;border-bottom:1px solid var(--line);position:relative}
+.mini__i>div{min-width:0}
+.mini__i b{padding-right:26px}
+.mini__x{position:absolute;top:12px;right:0;width:26px;height:26px;border-radius:50%;font-size:17px;
+  line-height:1;color:var(--muted);transition:var(--t)}
+.mini__x:hover{background:var(--soft);color:var(--sale)}
+.mini__i .ph{width:64px;flex:0 0 64px;border-radius:7px;aspect-ratio:3/4}
+.mini__i b{font-size:12.5px;font-weight:700;letter-spacing:.02em;display:block;line-height:1.35}
+.mini__i span{font-size:11.5px;color:var(--muted);display:block;margin:2px 0 6px}
+.mini__i em{font-style:normal;font-size:13.5px;font-weight:700}
+.mini__q{display:flex;align-items:center;gap:8px;margin-top:7px}
+.mini__q button{width:26px;height:26px;border:1px solid var(--line);border-radius:6px;font-size:14px;line-height:1}
+.mini__q button:hover{border-color:var(--ink)}
+.mini__q span{font-size:12.5px;min-width:18px;text-align:center;font-variant-numeric:tabular-nums}
+.mini__f{padding:18px 20px calc(18px + env(safe-area-inset-bottom));border-top:1px solid var(--line);
+  background:#fff}
+.mini__row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px}
+.mini__row span{font-size:13px;color:var(--muted)}
+.mini__row b{font-size:21px;font-weight:700;font-variant-numeric:tabular-nums}
+.mini__cta{display:block;width:100%;height:52px;border-radius:99px;background:var(--cta);color:#fff;
+  font-size:14.5px;font-weight:700;letter-spacing:.04em;display:grid;place-items:center;transition:var(--t)}
+.mini__cta:hover{background:var(--cta-h);transform:translateY(-2px)}
+.mini__link{display:block;text-align:center;font-size:13px;color:var(--muted);margin-top:12px;
+  text-decoration:underline;text-underline-offset:3px}
+.mini__empty{padding:60px 20px;text-align:center;color:var(--muted);font-size:14px}
+
+/* ---------- 24.4 confiança e escassez na PDP ---------- */
+.trust{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+.trust div{text-align:center;padding:12px 8px;border:1px solid var(--line);border-radius:10px}
+.trust [data-ic]{margin-inline:auto;color:var(--ink-2)}
+.trust [data-ic] svg{width:19px;height:19px}
+.trust b{display:block;font-size:11.5px;font-weight:600;margin-top:6px;line-height:1.3}
+.trust span{font-size:10.5px;color:var(--muted)}
+.stock{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:12.5px;color:var(--stock);font-weight:600}
+.stock i{width:7px;height:7px;border-radius:50%;background:var(--stock);animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35;transform:scale(.8)}}
+.opt.is-error .chip{border-color:var(--sale)}
+.opt__err{display:none;font-size:12px;color:var(--sale);font-weight:600;margin-top:7px}
+.opt.is-error .opt__err{display:block}
+
+/* ---------- 24.5 filtros da vitrine ---------- */
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:16px 0}
+.filters__g{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.filters__g>b{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-right:4px}
+.fchip{height:36px;padding:0 15px;border:1px solid var(--line);border-radius:99px;font-size:12.5px;
+  font-weight:500;background:#fff;transition:var(--t)}
+.fchip:hover{border-color:#bbb}
+.fchip.is-on{background:var(--cta);color:#fff;border-color:var(--cta)}
+.fchip__n{opacity:.55;margin-left:5px;font-size:11px}
+.filters__clear{margin-left:auto;font-size:12.5px;color:var(--muted);text-decoration:underline;
+  text-underline-offset:3px}
+.plp-count{font-size:13px;color:var(--muted);padding-bottom:10px}
+.card.is-hidden{display:none}
+
+/* ---------- 24.6 performance ---------- */
+/* seções fora da dobra só são pintadas quando chegam perto dela */
+section.reveal:not(:first-of-type){content-visibility:auto;contain-intrinsic-size:auto 520px}
+/* o halo do fundo era um blur de tela cheia (custoso em scroll) — agora é gradiente puro */
+body::before{filter:none;will-change:auto}
+.ph::before{will-change:auto}
+.card:hover .card__media .ph::before,.hero__slide.is-on .ph::before{will-change:transform}
+
+/* ---------- 24.7 alvos de toque e mobile ---------- */
+@media (hover:none){
+  .icons a,.burger-mob{min-width:44px;min-height:44px}
+  .icons a::after{inset:-11px}
+  .search button{width:40px;height:40px;top:1px}
+  .chip{min-height:46px;padding-inline:20px}
+  .cep-link,.mini__link,.filters__clear{display:inline-block;padding-block:10px}
+  .card__quick{width:44px;height:44px;opacity:1;transform:none}
+  .drop a{padding-block:13px}
+}
+@media (max-width:760px){
+  body{padding-bottom:var(--bar-h)}
+  .buybar__sz{display:none}
+  .buybar .ph{display:none}
+  .buybar__cta{flex:1;justify-content:center;display:grid;place-items:center}
+  .trust{grid-template-columns:repeat(3,1fr);gap:6px}
+  .trust b{font-size:10.5px}
+  .trust span{display:none}
+  .grid--5 .card__prices{gap:10px;padding-top:8px}
+  .grid--5 .card__col h6{font-size:8.5px;letter-spacing:.08em}
+  .grid--5 .card__col .now{font-size:13.5px}
+  .grid--5 .card__col .old{font-size:10.5px}
+  .grid--5 .card__col .pix{font-size:9.5px;line-height:1.25}
+  .grid--5 .card__inst{font-size:9.5px;gap:4px}
+  .grid--5 .card__name{font-size:11px;min-height:38px}
+  .coupon-tab{display:none}          /* liberava espaço do polegar; cupom fica no mini-carrinho */
+  .wpp-float{bottom:calc(16px + var(--bar-h));right:16px}
+  .filters{gap:6px}
+  .fchip{height:40px;font-size:12px}
+}
+@media (min-width:1600px){
+  :root{--wrap:1440px}
+  .grid--5{gap:22px}
+}

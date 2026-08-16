@@ -5,24 +5,36 @@
 (() => {
 'use strict';
 
-/* ---------- catálogo ---------- */
+/* ---------- catálogo ----------
+   Linha Wolfie: bodies e croppeds em malha poliamida.
+   varejo = preço vigente · de = preço cheio (riscado) · atacado = preço de fábrica (12+ peças)
+   parc = nº de parcelas sem juros exibido no card e na PDP */
 const CATALOG = {
-  'maio-dunas':        {name:'MAIÔ DUNAS',            varejo:199.90, atacado:139.93, ph:'g-sand',   cor:'Areia'},
-  'biquini-fita':      {name:'BIQUÍNI FITA ATACAMA',  varejo:179.90, atacado:125.93, ph:'g-terra',  cor:'Terracota'},
-  'biquini-pedras':    {name:'BIQUÍNI PEDRAS ATACAMA',varejo:299.90, atacado:209.93, ph:'g-noir',   cor:'Preto'},
-  'maio-laguna':       {name:'MAIÔ LAGUNA',           varejo:219.90, atacado:153.93, ph:'g-rose',   cor:'Rosé'},
-  'biquini-laguna':    {name:'BIQUÍNI LAGUNA',        varejo:219.90, atacado:153.93, ph:'g-sand',   cor:'Areia'},
-  'biquini-dunas':     {name:'BIQUÍNI DUNAS',         varejo:219.90, atacado:153.93, ph:'g-peach',  cor:'Pêssego'},
-  'biquini-deserto':   {name:'BIQUÍNI DESERTO',       varejo:99.90,  de:199.90, atacado:69.93, ph:'g-peach', cor:'Coral'},
-  'biquini-aurora':    {name:'BIQUÍNI AURORA',        varejo:79.90,  de:159.90, atacado:55.93, ph:'g-sand',  cor:'Areia'},
-  'biquini-lumina':    {name:'BIQUÍNI LUMINA',        varejo:99.90,  de:199.90, atacado:69.93, ph:'g-rose',  cor:'Rosé'},
-  'bermuda-sal':       {name:'BERMUDA SAL',           varejo:49.90,  de:139.90, atacado:34.93, ph:'g-stone', cor:'Off-white'},
-  'bone-lifestyle':    {name:'BONÉ LIFESTYLE',        varejo:99.90,  atacado:69.93, ph:'g-noir',  cor:'Preto'},
-  'viseira-coco':      {name:'VISEIRA ÁGUA DE COCO',  varejo:59.90,  atacado:41.93, ph:'g-noir',  cor:'Preto'},
-  'vestido-selvagem':  {name:'VESTIDO SELVAGEM',      varejo:159.90, atacado:111.93, ph:'g-terra', cor:'Marrom'},
-  'macaquinho-seamless':{name:'MACAQUINHO SEAMLESS',  varejo:189.90, atacado:132.93, ph:'g-blue',  cor:'Azul'},
-  'top-seamless':      {name:'TOP SEAMLESS',          varejo:129.90, atacado:90.93,  ph:'g-blue',  cor:'Azul'},
-  'legging-seamless':  {name:'LEGGING SEAMLESS',      varejo:199.90, atacado:139.93, ph:'g-blue',  cor:'Azul'}
+  'body-basic': {
+    name:'BODY BASIC', cat:'BODY', ref:'WF1001', ph:'g-noir', cor:'Preto',
+    varejo:79.90, atacado:55.93, parc:6, peso:0.18,
+    cores:['Preto','Off-white','Nude','Chocolate']
+  },
+  'cropped-multiformas': {
+    name:'CROPPED MULTIFORMAS', cat:'CROPPED', ref:'WF1002', ph:'g-olive', cor:'Verde militar',
+    varejo:69.90, de:99.90, atacado:48.93, parc:3, peso:0.15,
+    cores:['Preto','Vinho','Verde militar']
+  },
+  'body-recorte-quadrado': {
+    name:'BODY COM RECORTE QUADRADO', cat:'BODY', ref:'WF1003', ph:'g-terra', cor:'Terracota',
+    varejo:99.90, atacado:69.93, parc:6, peso:0.19,
+    cores:['Preto','Terracota','Off-white']
+  },
+  'cropped-manguinha': {
+    name:'CROPPED MANGUINHA', cat:'CROPPED', ref:'WF1004', ph:'g-rose', cor:'Rosé',
+    varejo:74.90, atacado:52.43, parc:6, peso:0.16,
+    cores:['Preto','Nude','Rosé']
+  },
+  'body-costas-livres': {
+    name:'BODY COSTAS LIVRES', cat:'BODY', ref:'WF1005', ph:'g-stone', cor:'Off-white',
+    varejo:94.90, atacado:66.43, parc:6, peso:0.18,
+    cores:['Preto','Off-white','Vinho']
+  }
 };
 
 const META_ATACADO = 12;          // peças variadas para liberar preço de fábrica
@@ -114,6 +126,7 @@ const ICONS = {
   pix:    S('<path d="M12 3l9 9-9 9-9-9 9-9z"/>'),
   wpp:    S('<path d="M20 12a8 8 0 01-11.9 7L3 20l1.1-4.8A8 8 0 1120 12z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5.6 0 1-.5 1-1l-1.4-.9-1.1.8a5 5 0 01-2.4-2.4l.8-1.1L10.5 9c-.5 0-1.5.1-1.5.5z" fill="currentColor" stroke="none"/>', 'stroke-width="1.6"'),
   trash:  S('<path d="M4 7h16M9 7V5h6v2M6 7l1 13h10l1-13"/>'),
+  pin:    S('<path d="M20 10c0 6.5-8 12-8 12s-8-5.5-8-12a8 8 0 1116 0z"/><circle cx="12" cy="10" r="3"/>'),
   bell:   S('<path d="M6 9a6 6 0 1112 0v5l2 3H4l2-3V9z"/><path d="M10 20a2 2 0 004 0"/>'),
   user:   S('<circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c0-4 3.4-6.5 7.5-6.5s7.5 2.5 7.5 6.5"/>'),
   /* marcas — desenhadas em path, sem CDN de terceiros */
@@ -319,27 +332,7 @@ function initModals(){
   });
 }
 
-/* ---------- 8. simulador de frete ---------- */
-function initCep(){
-  $$('[data-cep]').forEach(box => {
-    const input = $('input', box), out = $('.cep-out', box);
-    $('button', box).addEventListener('click', () => {
-      const cep = input.value.replace(/\D/g,'');
-      if(cep.length < 8){ input.focus(); input.style.borderColor = 'var(--price)'; return; }
-      input.style.borderColor = '';
-      out.classList.add('is-on');
-      out.innerHTML = `
-        <div><span>Sedex ⚡ FULL</span><b>2 a 4 dias úteis — ${brl(24.90)}</b></div>
-        <div><span>PAC — Correios</span><b>6 a 9 dias úteis — ${brl(12.40)}</b></div>
-        <div><span>Retirar na loja física</span><b>Grátis — hoje</b></div>
-        <div style="border:0;color:var(--green);font-weight:600">Frete grátis (PAC) em compras acima de ${brl(FRETE_GRATIS)}</div>`;
-    });
-    input.addEventListener('input', () => {
-      let v = input.value.replace(/\D/g,'').slice(0,8);
-      input.value = v.length > 5 ? v.slice(0,5) + '-' + v.slice(5) : v;
-    });
-  });
-}
+/* ---------- 8. frete: implementado em assets/js/frete.js ---------- */
 
 /* ---------- 9. botões de compra ---------- */
 function initBuy(){
@@ -475,9 +468,12 @@ function initFloats(){
 document.addEventListener('DOMContentLoaded', () => {
   initIcons(); initAtmosphere();
   initDrawer(); initHero(); initGallery(); initOptions(); initSizes();
-  initAcc(); initModals(); initCep(); initBuy(); initFloats();
+  initAcc(); initModals(); initBuy(); initFloats();
   Cart.paint(); renderCart(); initPolicy(); initCheckout();
 });
 
-window.WolfieCart = Cart;   // exposto para debug no console
+window.WolfieCart = Cart;              // exposto para o frete.js e para debug
+window.WolfieCatalog = CATALOG;        // preços e pesos
+window.WOLFIE_META_ATACADO = META_ATACADO;
+window.WolfieIcons = initIcons;        // injeta SVG em conteúdo criado depois
 })();

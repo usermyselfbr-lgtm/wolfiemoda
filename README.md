@@ -50,10 +50,15 @@ GitHub Pages. Ative "Enforce HTTPS" em Settings → Pages.
 ├── sobre.html          institucional
 ├── 404.html            página de erro (servida pelo Pages)
 ├── assets/
-│   ├── css/style.css   design system + refinamento (seções 1–21)
+│   ├── css/style.css   design system + refinamento (seções 1–23)
 │   ├── js/app.js       catálogo, carrinho, efeitos, ícones SVG
-│   ├── favicon.svg     monograma W
+│   ├── js/frete.js     cálculo de frete (CEP real + zonas + cotação opcional)
+│   ├── js/shop.js      conversão: mini-carrinho, barra fixa, filtros, validação
+│   ├── brand/          logo e ícones oficiais (ver abaixo)
 │   └── og.jpg          imagem de compartilhamento 1200×630
+├── site.webmanifest    ícones e cores para instalar como app
+├── api/frete.js        função serverless p/ cotação real (Vercel) — opcional
+├── FRETE.md            como o frete funciona e como ligar na transportadora
 ├── .nojekyll           desliga o Jekyll no GitHub Pages
 ├── CONTRIBUTING.md     onde mexer em cada coisa
 └── README.md
@@ -69,6 +74,22 @@ GitHub Pages. Ative "Enforce HTTPS" em Settings → Pages.
 | `carrinho.html` | Carrinho — **barra de progresso de atacado (x/12)** + modal de política de troca |
 | `checkout.html` | Checkout em 4 passos, PF/PJ, resumo, cupom automático |
 | `sobre.html` | Institucional |
+
+## Catálogo (5 SKUs)
+
+| Produto | Categoria | Varejo | PIX (−5%) | Atacado (12+) | Parcelas |
+|---|---|---|---|---|---|
+| Body Basic | BODY | R$ 79,90 | R$ 75,91 | R$ 55,93 | 6x R$ 13,32 |
+| Cropped Multiformas | CROPPED | ~~R$ 99,90~~ **R$ 69,90** | — | R$ 48,93 | 3x R$ 23,30 |
+| Body com Recorte Quadrado | BODY | R$ 99,90 | R$ 94,91 | R$ 69,93 | 6x R$ 16,65 |
+| Cropped Manguinha | CROPPED | R$ 74,90 | R$ 71,16 | R$ 52,43 | 6x R$ 12,48 |
+| Body Costas Livres | BODY | R$ 94,90 | R$ 90,16 | R$ 66,43 | 6x R$ 15,82 |
+
+Preço de atacado = 70% do varejo. Para mudar qualquer valor, edite `CATALOG` no topo de
+`assets/js/app.js` **e** o card correspondente em `index.html` / `colecao.html` / `produto.html`
+(o HTML é estático de propósito, para o Google indexar o preço).
+
+Tamanhos P/M/G/GG (veste do 36 ao 44). Cores por peça estão no `CATALOG` (campo `cores`).
 
 ## Regras de negócio implementadas (iguais ao modelo)
 
@@ -113,10 +134,19 @@ Sem Font Awesome / Ionicons. Um mapa de SVGs inline em `app.js` (`ICONS`) é inj
 elemento com `data-ic="nome"`. Nomes: shield, truck, refresh, chat, heart, card, ticket, cart, bag,
 box, back, zoom, hanger, ruler, lock, mail, store, check, checkc, book, info, percent, pix, wpp, trash, bell.
 
-## O que é fake (por ser estático)
+## Frete (conectado)
+
+O CEP é consultado em API pública real — **BrasilAPI** com **ViaCEP** como reserva — e o preço sai
+de uma tabela de zonas por UF + peso do pedido, com frete grátis acima de R$ 399,90 e retirada na
+fábrica para Goiânia. Funciona no site estático, sem backend.
+
+Para cotação real de transportadora existe `api/frete.js` (Melhor Envio via função serverless):
+faça o deploy, configure o token e aponte `window.WOLFIE_FRETE_API`. Se a API falhar, o site cai
+sozinho na tabela. Detalhes em **[FRETE.md](FRETE.md)**.
+
+## O que ainda é fake (por ser estático)
 
 - Busca, newsletter e login não têm backend.
-- O cálculo de frete devolve valores fixos (`initCep`) — plugar API dos Correios/Melhor Envio ali.
 - O checkout não processa pagamento; é a casca visual dos 4 passos.
 
 ## Camada de refinamento (seção 20 do CSS + `initAtmosphere()`)
@@ -149,6 +179,40 @@ para "Preço de atacado liberado 🎉" e todos os preços do carrinho caem para 
 **Acessibilidade** — `focus-visible` com anel verde em tudo que é focável, `prefers-reduced-motion`
 desliga todas as animações, `@media print` revela o conteúdo e esconde flutuantes.
 
+## Marca
+
+Arquivos oficiais processados em `assets/brand/`:
+
+| Arquivo | Uso |
+|---|---|
+| `icone-512/192/180/32.png`, `favicon.ico` | ícone do navegador, atalho de celular e manifest — é a ID visual da marca (W + coração em preto) |
+| `wordmark-flat.png` | wordmark no cabeçalho, rodapé e checkout (bronze sólido `#6b4636`) |
+| `logo-light.png` | lockup original pérola — **só sobre fundo escuro** |
+| `logo-dark.png` | lockup metálico escurecido para fundo claro |
+| `logo-flat.png` | lockup chapado, para tamanhos pequenos e impressão |
+| `monograma.png` | só o W, fundo transparente |
+
+**Por que existem versões escuras:** o logo original é pérola/rosé (`#f3e6da`) e tem contraste de
+**1,23:1 contra branco** — some no cabeçalho. Contra preto são 17,1:1. Por isso o ícone usa fundo
+preto (como a própria ID visual da marca) e o cabeçalho usa a versão bronze (**7,7:1**).
+Se a designer produzir uma versão oficial para fundo claro, é só substituir `wordmark-flat.png`.
+
+## Camada de conversão (`shop.js` + CSS seção 24)
+
+Padrões das grandes de moda, implementados:
+
+- **CTA primário preto** (contraste 18,9:1). O verde virou sinal exclusivo de economia — PIX, frete
+  grátis, atacado — no tom AA `#0b7a3d`. Vermelho `#d1354a` só para liquidação.
+- **Mini-carrinho em gaveta** ao adicionar, com duas metas: frete grátis (R$ 399,90) e preço de
+  fábrica (12 peças), cada uma com barra de progresso.
+- **Barra fixa de compra** na PDP quando o botão sai da tela — com miniatura, tamanho e preço.
+- **Tamanho obrigatório**: sem escolher, o produto não entra na sacola (erro em vermelho no seletor).
+- **Filtros e ordenação funcionais** na vitrine, com contagem por categoria e faixa de preço.
+- **Bloco de confiança** na PDP (troca, segurança, fabricação própria) e aviso de estoque baixo
+  — este último só aparece se você definir `estoque` no `CATALOG`; por padrão fica desligado.
+- **Dados estruturados** JSON-LD: `OnlineStore`, `Product` com `Offer`/frete/devolução,
+  `BreadcrumbList` e `ItemList`.
+
 ## Antes de ir para produção
 
 - [ ] Trocar `SEU-USUARIO.github.io` pela URL real (canonical / og:url / og:image)
@@ -156,5 +220,6 @@ desliga todas as animações, `@media print` revela o conteúdo e esconde flutua
 - [ ] Ligar Facebook e TikTok (hoje `href="#"`) — Instagram já aponta para `@usewolfie.br`
 - [ ] Substituir CNPJ, endereço e e-mail de contato
 - [ ] Trocar os placeholders `.ph` por fotos reais
-- [ ] Plugar frete real em `initCep()` e um checkout de verdade (Yampi/Appmax) no `FINALIZAR COMPRA`
+- [ ] (opcional) Deploy da `api/frete.js` com token da transportadora — ver FRETE.md
+- [ ] Plugar um checkout de verdade (Yampi/Appmax) no `FINALIZAR COMPRA`
 - [ ] Adicionar GA4 / Meta Pixel se for rodar tráfego pago
