@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checkout — Wolfie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<meta name="description" content="Finalize sua compra com segurança. PIX com 5% de desconto.">
+<meta name="theme-color" content="#ffffff">
+<meta name="author" content="Wolfie">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/favicon.svg">
+<link rel="canonical" href="https://SEU-USUARIO.github.io/wolfie/checkout.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Wolfie">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Checkout — Wolfie">
+<meta property="og:description" content="Finalize sua compra com segurança. PIX com 5% de desconto.">
+<meta property="og:url" content="https://SEU-USUARIO.github.io/wolfie/checkout.html">
+<meta property="og:image" content="https://SEU-USUARIO.github.io/wolfie/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Checkout — Wolfie">
+<meta name="twitter:description" content="Finalize sua compra com segurança. PIX com 5% de desconto.">
+<meta name="twitter:image" content="https://SEU-USUARIO.github.io/wolfie/assets/og.jpg">
+</head>
+<body class="checkout">
+
+<header class="ck-head">
+  <div class="wrap ck-head__in">
+    <a href="index.html" class="logo"><span class="logo__mark">W</span><span class="logo__txt">WOLFIE</span></a>
+    <span class="ck-safe"><i data-ic="shield"></i> Compra 100% Segura</span>
+  </div>
+</header>
+
+<!-- estado 1: carregando -->
+<div class="ck-loading" id="ck-loading">
+  <div class="spin"></div>
+  <p>Carregando checkout...</p>
+</div>
+
+<!-- estado 2: checkout -->
+<main class="wrap ck-body" id="ck-body">
+
+  <div class="ck-steps">
+    <div class="is-on"><i>1</i> Dados</div><u></u>
+    <div><i>2</i> Endereço</div><u></u>
+    <div><i>3</i> Entrega</div><u></u>
+    <div><i>4</i> Pagar</div>
+  </div>
+
+  <div class="ck-grid">
+
+    <!-- coluna esquerda -->
+    <section class="ck-card">
+      <h3><i>1</i> Identificação</h3>
+      <p>Utilizamos seu e-mail para: identificar seu perfil, histórico de compra, notificação de pedidos e carrinho de compras.</p>
+
+      <div class="seg">
+        <button class="is-on" data-type="pf"><i data-ic="user"></i> Pessoa física</button>
+        <button data-type="pj"><i data-ic="building"></i> Pessoa jurídica</button>
+      </div>
+
+      <div class="fld">
+        <label id="name-label">Nome completo</label>
+        <input type="text" placeholder="Digite seu nome completo">
+      </div>
+
+      <div class="fld-row">
+        <div class="fld"><label>E-mail</label><input type="email" placeholder="Digite seu e-mail"></div>
+        <div class="fld"><label id="doc-label">CPF</label><input type="text" id="doc-input" placeholder="000.000.000-00"></div>
+      </div>
+
+      <div class="fld">
+        <label>Celular / WhatsApp</label>
+        <div class="fld-phone"><span>+55</span><input type="tel" placeholder="(00) 00000-0000"></div>
+      </div>
+
+      <div class="ck-note"><i data-ic="percent"></i> <span>Você ganhou <b>5% de desconto</b> pagando com Pix</span></div>
+
+      <div class="ck-remember">
+        <i></i>
+        <div><b>Lembrar meus dados</b><span>Salvar meus dados neste dispositivo para preencher automaticamente nas próximas compras</span></div>
+      </div>
+    </section>
+
+    <!-- coluna direita: resumo -->
+    <aside class="ck-card ck-sum">
+      <h4>Resumo</h4>
+
+      <label>Tem um cupom?</label>
+      <div class="ck-coupon">
+        <input type="text" id="coupon-input" placeholder="Código do cupom">
+        <button>APLICAR</button>
+      </div>
+
+      <label>Anotação da compra <span style="color:var(--muted)">(opcional)</span></label>
+      <textarea id="ck-note" maxlength="300" placeholder="Deixe uma observação sobre sua compra."></textarea>
+      <p class="cnt" id="ck-cnt">0/300 caracteres</p>
+
+      <div class="ck-line"><span>Produtos</span><span id="ck-sub">R$ 0,00</span></div>
+      <div class="ck-line" id="ck-disc" style="display:none;color:var(--green)"><span>Cupom WOLFIE10</span><span>– R$ 0,00</span></div>
+      <div class="ck-total"><span>Total</span><span id="ck-tot">R$ 0,00</span></div>
+
+      <div class="ck-prods">
+        <h5 id="ck-count">Produtos (0)</h5>
+        <div id="ck-prods"></div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<!-- pop-up de cupom -->
+<div class="ov" id="pop-coupon">
+  <div class="modal pop">
+    <button class="x" data-close>×</button>
+    <h3>🎉 Cupom disponível!</h3>
+    <p>O cupom <b>WOLFIE10</b> está disponível e dá 10% de desconto. Deseja aplicar?</p>
+    <div class="pop__row">
+      <button class="pop__no" data-close>Não, obrigado</button>
+      <button class="pop__yes" id="apply-coupon">Aplicar cupom</button>
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/app.js"></script>
+</body>
+</html>
