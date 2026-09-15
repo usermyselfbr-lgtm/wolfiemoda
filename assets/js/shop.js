@@ -49,7 +49,7 @@ const Mini = {
       <div class="mini__list" data-mini-list></div>
       <div class="mini__f">
         <div class="mini__row"><span>Subtotal</span><b data-mini-total>R$ 0,00</b></div>
-        <a href="checkout.html" class="mini__cta">FINALIZAR COMPRA</a>
+        <a href="#" class="mini__cta" data-wpp-checkout>FINALIZAR PELO WHATSAPP</a>
         <a href="carrinho.html" class="mini__link">Ver sacola completa</a>
       </div>`;
 
@@ -106,7 +106,7 @@ const Mini = {
       const p = cat()[it.id]; if(!p) return '';
       const preco = (atacado ? p.atacado : p.varejo) * it.qty;
       return `<div class="mini__i">
-        <div class="ph grain ${p.ph}"></div>
+        <div class="ph grain ${p.ph}">${p.img ? `<img src="${p.img[0]}" alt="">` : ""}</div>
         <div style="flex:1">
           <b>${p.name}</b>
           <span>${it.size} · ${p.cor}</span>
@@ -192,7 +192,7 @@ function barraDeCompra(){
   bar.className = 'buybar';
   bar.innerHTML = `
     <div class="wrap buybar__in">
-      <div class="ph grain ${p.ph}"></div>
+      <div class="ph grain ${p.ph}">${p.img ? `<img src="${p.img[0]}" alt="">` : ""}</div>
       <div class="buybar__i">
         <b>${p.name}</b>
         <span>Tam. <u data-bar-size>${tamanhoEscolhido() || '—'}</u></span>
@@ -264,8 +264,8 @@ function filtros(){
         <span class="fchip__n">${cards.filter(x => x.dataset.cat === c).length}</span></button>`).join('')}
     </div>
     <div class="filters__g"><b>Preço</b>
-      <button class="fchip" data-p="0-79.9">até R$ 79,90</button>
-      <button class="fchip" data-p="80-999">R$ 80 ou mais</button>
+      <button class="fchip" data-p="0-59.9">até R$ 59,90</button>
+      <button class="fchip" data-p="60-999">R$ 60 ou mais</button>
     </div>
     <a href="#" class="filters__clear">Limpar filtros</a>`;
   $('.plp-tools').after(box);

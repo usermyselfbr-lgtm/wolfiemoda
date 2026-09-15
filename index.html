@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/style.css?v=20260816">
 <meta name="description" content="Wolfie — bodies e croppeds em malha poliamida, fabricação própria. Varejo e atacado no mesmo catálogo: preço de fábrica acima de 12 peças variadas.">
 <meta name="theme-color" content="#111111">
 <meta name="author" content="Wolfie">
@@ -51,7 +51,7 @@
       <svg width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
     </button>
     <a href="index.html" class="logo">
-      <span class="logo__mark"><img src="assets/brand/icone-192.png" alt="" width="192" height="192"></span><img class="logo__word" src="assets/brand/wordmark-flat.png" alt="Wolfie — Moda Feminina" width="640" height="222">
+      <img class="logo__word" src="assets/brand/wordmark-flat.png" alt="Wolfie — Moda Feminina" width="86" height="30">
     </a>
     <form class="search" onsubmit="return false">
       <input type="search" placeholder="O que está buscando?" aria-label="Buscar">
@@ -95,117 +95,37 @@
   <div class="rainbow"></div>
 </header>
 
-<!-- ░░ HERO ░░ -->
-<section class="hero" style="padding:0">
-  <div class="hero__slide is-on">
-    <div class="ph grain g-noir hero__bg"></div>
-    <div class="hero__copy">
-      <span class="hero__eyebrow">Coleção</span>
-      <h1 class="hero__title">Segunda<br>Pele</h1>
-      <span class="hero__sub">Bodies Wolfie</span>
-    </div>
-  </div>
-  <div class="hero__slide">
-    <div class="ph grain g-rose hero__bg"></div>
-    <div class="hero__copy">
-      <span class="hero__eyebrow">Coleção</span>
-      <p class="hero__title">Cropped</p>
-      <span class="hero__sub">Manguinha & Multiformas</span>
-    </div>
-  </div>
-  <div class="hero__slide">
-    <div class="ph grain g-terra hero__bg"></div>
-    <div class="hero__copy">
-      <span class="hero__eyebrow">Exclusivo para lojistas</span>
-      <p class="hero__title">Atacado</p>
-      <span class="hero__sub">A partir de 12 peças variadas</span>
-    </div>
-  </div>
-  <button class="hero__nav prev" aria-label="Anterior">‹</button>
-  <button class="hero__nav next" aria-label="Próximo">›</button>
-  <div class="hero__dots"></div>
-</section>
-
-<!-- ░░ BARRA INFINITA ░░ -->
-<div class="infinite">
-  <div class="track">
-    <span><i data-ic="shield"></i> Compra Segura</span><span><i data-ic="truck"></i> Entrega Rápida</span><span><i data-ic="refresh"></i> Troca em 7 dias</span>
-    <span><i data-ic="chat"></i> Suporte das 09h00 às 18h00</span><span><i data-ic="heart"></i> Fabricação Própria</span><span><i data-ic="card"></i> Parcele em até 6x sem juros</span>
-    <span><i data-ic="shield"></i> Compra Segura</span><span><i data-ic="truck"></i> Entrega Rápida</span><span><i data-ic="refresh"></i> Troca em 7 dias</span>
-    <span><i data-ic="chat"></i> Suporte das 09h00 às 18h00</span><span><i data-ic="heart"></i> Fabricação Própria</span><span><i data-ic="card"></i> Parcele em até 6x sem juros</span>
-  </div>
-</div>
-
-<!-- ░░ BLOCOS DUPLOS ░░ -->
-<section>
-  <div class="wrap duo">
-    <a href="colecao.html" class="duo__card">
-      <div class="ph grain g-noir"></div>
-      <div class="duo__ov"><h3>Linha Body</h3><span class="btn-pill">Ver mais</span></div>
-    </a>
-    <a href="colecao.html" class="duo__card">
-      <div class="ph grain g-rose"></div>
-      <div class="duo__ov"><h3>Linha Cropped</h3><span class="btn-pill">Ver mais</span></div>
-    </a>
-  </div>
-</section>
-
-<!-- ░░ CATEGORIAS ░░ -->
-<section>
-  <div class="wrap">
-    <div class="sec-head"><h2 class="sec-title">Navegue por categoria</h2></div>
-    <div class="circles">
-      <a href="colecao.html" class="circle"><div class="ph grain g-noir"></div><b>BODY</b></a>
-      <a href="colecao.html" class="circle"><div class="ph grain g-rose"></div><b>CROPPED</b></a>
-      <a href="colecao.html" class="circle"><div class="ph grain g-stone"></div><b>NOVIDADES</b></a>
-      <a href="colecao.html" class="circle"><div class="ph grain g-terra"></div><b>MAIS VENDIDOS</b></a>
-      <a href="colecao.html" class="circle"><div class="ph grain g-olive"></div><b>ATACADO</b></a>
-    </div>
-  </div>
-</section>
-
 <!-- ░░ VITRINE — LINHA COMPLETA ░░ -->
 <section>
   <div class="wrap">
     <div class="sec-head"><h2 class="sec-title">Vitrine Wolfie</h2><a href="colecao.html">Ver Todos</a></div>
     <div class="grid grid--5">
 
-      <a class="card" href="produto.html">
-        <div class="card__media"><div class="ph grain g-noir"></div><span class="card__quick" data-ic="bag"></span></div>
+      <a class="card" href="produto.html?p=body-basic">
+        <div class="card__media"><div class="ph grain g-blue" data-alt="assets/img/produtos/body-basic-2.jpg"><img src="assets/img/produtos/body-basic-1.jpg" alt="BODY BASIC" loading="lazy"></div><span class="card__quick" data-ic="bag"></span></div>
         <div class="card__body"><div class="card__name">BODY BASIC</div>
           <div class="card__prices">
-            <div class="card__col"><h6>Varejo</h6><div class="now">R$ 79,90</div><div class="pix">ou R$ 75,91 no PIX</div></div>
+            <div class="card__col"><h6>Varejo</h6><div class="now">R$ 54,90</div><div class="pix">ou R$ 52,15 no PIX</div></div>
             <div class="card__col"><h6>Atacado</h6><div class="lock">—</div></div>
           </div>
-          <div class="card__inst"><i data-ic="card"></i> <b>6x de R$ 13,32</b> <i>SEM JUROS</i></div>
+          <div class="card__inst"><i data-ic="card"></i> <b>6x de R$ 9,15</b> <i>SEM JUROS</i></div>
         </div>
       </a>
 
-      <a class="card" href="produto.html">
-        <div class="card__media"><span class="card__tag">-30%</span><div class="ph grain g-olive"></div><span class="card__quick" data-ic="bag"></span></div>
+      <a class="card" href="produto.html?p=cropped-multiformas">
+        <div class="card__media"><div class="ph grain g-stone" data-alt="assets/img/produtos/cropped-multiformas-2.jpg"><img src="assets/img/produtos/cropped-multiformas-1.jpg" alt="CROPPED MULTIFORMAS" loading="lazy"></div><span class="card__quick" data-ic="bag"></span></div>
         <div class="card__body"><div class="card__name">CROPPED MULTIFORMAS</div>
           <div class="card__prices">
-            <div class="card__col"><h6>Varejo</h6><div class="old">R$ 99,90</div><div class="now">R$ 69,90</div></div>
+            <div class="card__col"><h6>Varejo</h6><div class="now">R$ 44,90</div><div class="pix">ou R$ 42,65 no PIX</div></div>
             <div class="card__col"><h6>Atacado</h6><div class="lock">—</div></div>
           </div>
-          <div class="card__inst"><i data-ic="card"></i> <b>3x de R$ 23,30</b> <i>SEM JUROS</i></div>
+          <div class="card__inst"><i data-ic="card"></i> <b>3x de R$ 14,97</b> <i>SEM JUROS</i></div>
         </div>
       </a>
 
-      <a class="card" href="produto.html">
-        <div class="card__media"><div class="ph grain g-terra"></div><span class="card__quick" data-ic="bag"></span></div>
-        <div class="card__body"><div class="card__name">BODY COM RECORTE QUADRADO</div>
-          <div class="card__prices">
-            <div class="card__col"><h6>Varejo</h6><div class="now">R$ 99,90</div><div class="pix">ou R$ 94,91 no PIX</div></div>
-            <div class="card__col"><h6>Atacado</h6><div class="lock">—</div></div>
-          </div>
-          <div class="card__inst"><i data-ic="card"></i> <b>6x de R$ 16,65</b> <i>SEM JUROS</i></div>
-        </div>
-      </a>
-
-      <a class="card" href="produto.html">
-        <div class="card__media"><div class="ph grain g-rose"></div><span class="card__quick" data-ic="bag"></span></div>
-        <div class="card__body"><div class="card__name">CROPPED MANGUINHA</div>
+      <a class="card" href="produto.html?p=body-manga-longa">
+        <div class="card__media"><div class="ph grain g-navy" data-alt="assets/img/produtos/body-manga-longa-2.jpg"><img src="assets/img/produtos/body-manga-longa-1.jpg" alt="BODY MANGA LONGA" loading="lazy"></div><span class="card__quick" data-ic="bag"></span></div>
+        <div class="card__body"><div class="card__name">BODY MANGA LONGA</div>
           <div class="card__prices">
             <div class="card__col"><h6>Varejo</h6><div class="now">R$ 74,90</div><div class="pix">ou R$ 71,16 no PIX</div></div>
             <div class="card__col"><h6>Atacado</h6><div class="lock">—</div></div>
@@ -214,14 +134,25 @@
         </div>
       </a>
 
-      <a class="card" href="produto.html">
-        <div class="card__media"><div class="ph grain g-stone"></div><span class="card__quick" data-ic="bag"></span></div>
-        <div class="card__body"><div class="card__name">BODY COSTAS LIVRES</div>
+      <a class="card" href="produto.html?p=cropped-manguinha">
+        <div class="card__media"><div class="ph grain g-red"><img src="assets/img/produtos/cropped-manguinha-1.jpg" alt="CROPPED MANGUINHA" loading="lazy"></div><span class="card__quick" data-ic="bag"></span></div>
+        <div class="card__body"><div class="card__name">CROPPED MANGUINHA</div>
           <div class="card__prices">
-            <div class="card__col"><h6>Varejo</h6><div class="now">R$ 94,90</div><div class="pix">ou R$ 90,16 no PIX</div></div>
+            <div class="card__col"><h6>Varejo</h6><div class="now">R$ 44,90</div><div class="pix">ou R$ 42,65 no PIX</div></div>
             <div class="card__col"><h6>Atacado</h6><div class="lock">—</div></div>
           </div>
-          <div class="card__inst"><i data-ic="card"></i> <b>6x de R$ 15,82</b> <i>SEM JUROS</i></div>
+          <div class="card__inst"><i data-ic="card"></i> <b>3x de R$ 14,97</b> <i>SEM JUROS</i></div>
+        </div>
+      </a>
+
+      <a class="card" href="produto.html?p=body-costas-livres">
+        <div class="card__media"><div class="ph grain g-peach" data-alt="assets/img/produtos/body-costas-livres-2.jpg"><img src="assets/img/produtos/body-costas-livres-1.jpg" alt="BODY COSTAS LIVRES" loading="lazy"></div><span class="card__quick" data-ic="bag"></span></div>
+        <div class="card__body"><div class="card__name">BODY COSTAS LIVRES</div>
+          <div class="card__prices">
+            <div class="card__col"><h6>Varejo</h6><div class="now">R$ 74,90</div><div class="pix">ou R$ 71,16 no PIX</div></div>
+            <div class="card__col"><h6>Atacado</h6><div class="lock">—</div></div>
+          </div>
+          <div class="card__inst"><i data-ic="card"></i> <b>6x de R$ 12,48</b> <i>SEM JUROS</i></div>
         </div>
       </a>
 
@@ -229,59 +160,12 @@
   </div>
 </section>
 
-<!-- ░░ CHAMADA DE ATACADO ░░ -->
-<section style="padding-top:0">
-  <div class="wrap fitness">
-    <div class="fitness__hero">
-      <div class="ph grain g-noir"></div>
-      <div class="in">
-        <h3>COMPRE NO ATACADO</h3>
-        <p style="font-size:13.5px;line-height:1.6;max-width:26ch;opacity:.9">
-          Monte 12 peças variadas e todo o carrinho vira preço de fábrica, automaticamente.
-        </p>
-        <a href="colecao.html" class="btn-pill" style="align-self:flex-start">Montar meu pedido</a>
-      </div>
-    </div>
-    <a class="card" href="produto.html">
-      <div class="card__media"><div class="ph grain g-noir"></div><span class="card__quick" data-ic="bag"></span></div>
-      <div class="card__body"><div class="card__name">BODY BASIC</div>
-        <div class="card__prices">
-          <div class="card__col"><h6>Varejo</h6><div class="now">R$ 79,90</div><div class="pix">ou R$ 75,91 no PIX</div></div>
-          <div class="card__col"><h6>Atacado</h6><div class="lock">—</div></div>
-        </div>
-        <div class="card__inst"><i data-ic="card"></i> <b>6x de R$ 13,32</b> <i>SEM JUROS</i></div>
-      </div>
-    </a>
-    <a class="card" href="produto.html">
-      <div class="card__media"><div class="ph grain g-rose"></div><span class="card__quick" data-ic="bag"></span></div>
-      <div class="card__body"><div class="card__name">CROPPED MANGUINHA</div>
-        <div class="card__prices">
-          <div class="card__col"><h6>Varejo</h6><div class="now">R$ 74,90</div><div class="pix">ou R$ 71,16 no PIX</div></div>
-          <div class="card__col"><h6>Atacado</h6><div class="lock">—</div></div>
-        </div>
-        <div class="card__inst"><i data-ic="card"></i> <b>6x de R$ 12,48</b> <i>SEM JUROS</i></div>
-      </div>
-    </a>
-  </div>
-</section>
-
-<!-- ░░ PERKS ░░ -->
-<div class="perks">
-  <div class="wrap perks__in">
-    <div class="perks__i"><i data-ic="ticket"></i> cupom WOLFIE10</div>
-    <div class="perks__i"><i data-ic="card"></i> Pague em até 6x sem juros</div>
-    <div class="perks__i"><i data-ic="mail"></i> 5% de desconto no PIX</div>
-    <div class="perks__i"><i data-ic="cart"></i> Satisfação ou Reembolso</div>
-  </div>
-</div>
-<div class="rainbow"></div>
-
 <!-- ░░ FOOTER ░░ -->
 <footer class="footer">
   <div class="wrap">
     <div class="footer__cols">
       <div>
-        <a href="index.html" class="logo" style="margin-bottom:18px"><span class="logo__mark"><img src="assets/brand/icone-192.png" alt="" width="192" height="192"></span><img class="logo__word" src="assets/brand/wordmark-flat.png" alt="Wolfie — Moda Feminina" width="640" height="222"></a>
+        <a href="index.html" class="logo" style="margin-bottom:18px"><img class="logo__word" src="assets/brand/wordmark-flat.png" alt="Wolfie — Moda Feminina" width="86" height="30"></a>
         <h5>Atendimento ao cliente</h5>
         <p class="mail"><b>Email:</b> contato@wolfie.com.br<br>
         <b class="wpp">WhatsApp:</b> <span class="wpp">+55 62 99999-0000</span></p>
@@ -312,7 +196,7 @@
         <input type="email" placeholder="Seu e-mail" aria-label="E-mail">
         <button>Enviar</button>
         <p style="font-size:12px;margin-top:18px">Siga-nos</p>
-        <div class="social"><a class="social__ig" href="https://www.instagram.com/usewolfie.br" target="_blank" rel="noopener noreferrer" aria-label="Instagram da Wolfie" data-ic="ig"></a><a class="social__fb" href="#" aria-label="Facebook da Wolfie" data-ic="fb"></a><a class="social__tk" href="#" aria-label="TikTok da Wolfie" data-ic="tk"></a><a class="social__wa" href="https://wa.me/5562999990000" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp da Wolfie" data-ic="wpp"></a></div>
+        <div class="social"><a class="social__ig" href="https://www.instagram.com/usewolfie.br" target="_blank" rel="noopener noreferrer" aria-label="Instagram da Wolfie" data-ic="ig"></a><a class="social__fb" href="#" aria-label="Facebook da Wolfie" data-ic="fb"></a><a class="social__tk" href="#" aria-label="TikTok da Wolfie" data-ic="tk"></a><a class="social__wa" href="https://wa.me/5562984088708" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp da Wolfie" data-ic="wpp"></a></div>
       </div>
     </div>
 
@@ -340,14 +224,14 @@
 
 <!-- ░░ FLUTUANTES ░░ -->
 <a href="#" class="coupon-tab"><i data-ic="ticket"></i> CUPOM</a>
-<a href="https://wa.me/5562999990000" target="_blank" rel="noopener noreferrer" class="wpp-float" aria-label="Falar no WhatsApp"><i data-ic="wpp"></i></a>
+<a href="https://wa.me/5562984088708" target="_blank" rel="noopener noreferrer" class="wpp-float" aria-label="Falar no WhatsApp"><i data-ic="wpp"></i></a>
 <div class="chat-bubble">•••</div>
 
 <!-- ░░ DRAWER MOBILE ░░ -->
 <div class="scrim" id="scrim"></div>
 <aside class="drawer" id="drawer">
   <div class="drawer__h">
-    <span class="logo"><span class="logo__mark"><img src="assets/brand/icone-192.png" alt="" width="192" height="192"></span><img class="logo__word" src="assets/brand/wordmark-flat.png" alt="Wolfie — Moda Feminina" width="640" height="222"></span>
+    <span class="logo"><img class="logo__word" src="assets/brand/wordmark-flat.png" alt="Wolfie — Moda Feminina" width="86" height="30"></span>
     <button data-close-menu style="font-size:22px">×</button>
   </div>
   <div class="drawer__l">
@@ -361,7 +245,7 @@
   </div>
 </aside>
 
-<script defer src="assets/js/app.js"></script>
-<script defer src="assets/js/shop.js"></script>
+<script defer src="assets/js/app.js?v=20260816"></script>
+<script defer src="assets/js/shop.js?v=20260816"></script>
 </body>
 </html>

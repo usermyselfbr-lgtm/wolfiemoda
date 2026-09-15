@@ -11,35 +11,46 @@
    parc = nº de parcelas sem juros exibido no card e na PDP */
 const CATALOG = {
   'body-basic': {
-    name:'BODY BASIC', cat:'BODY', ref:'WF1001', ph:'g-noir', cor:'Preto',
-    varejo:79.90, atacado:55.93, parc:6, peso:0.18,
-    cores:['Preto','Off-white','Nude','Chocolate']
+    name:'BODY BASIC', cat:'BODY', ref:'WF1001', ph:'g-blue', cor:'Azul bebê',
+    varejo:54.90, atacado:38.43, parc:6, peso:0.18,
+    cores:['Azul bebê','Preto','Off-white','Nude'],
+    img:['assets/img/produtos/body-basic-1.jpg','assets/img/produtos/body-basic-2.jpg'],
+    desc:'Body de alças largas e decote reto, o clássico da malha poliamida de segunda pele. Cava fechada, acompanha o corpo sem marcar e não sobe na cintura. Fechamento inferior com botões de pressão. Vai do jeans à alfaiataria.'
   },
   'cropped-multiformas': {
-    name:'CROPPED MULTIFORMAS', cat:'CROPPED', ref:'WF1002', ph:'g-olive', cor:'Verde militar',
-    varejo:69.90, de:99.90, atacado:48.93, parc:3, peso:0.15,
-    cores:['Preto','Vinho','Verde militar']
+    name:'CROPPED MULTIFORMAS', cat:'CROPPED', ref:'WF1002', ph:'g-stone', cor:'Branco',
+    varejo:44.90, atacado:31.43, parc:3, peso:0.15,
+    cores:['Branco','Preto','Vinho'],
+    img:['assets/img/produtos/cropped-multiformas-1.jpg','assets/img/produtos/cropped-multiformas-2.jpg'],
+    desc:'Cropped frente única de amarrar no pescoço, com decote V profundo e costas nuas. As tiras permitem várias amarrações: no pescoço, cruzada ou em laço. Malha poliamida com elastano e forro na frente.'
   },
-  'body-recorte-quadrado': {
-    name:'BODY COM RECORTE QUADRADO', cat:'BODY', ref:'WF1003', ph:'g-terra', cor:'Terracota',
-    varejo:99.90, atacado:69.93, parc:6, peso:0.19,
-    cores:['Preto','Terracota','Off-white']
+  'body-manga-longa': {
+    name:'BODY MANGA LONGA', cat:'BODY', ref:'WF1003', ph:'g-navy', cor:'Marinho',
+    varejo:74.90, atacado:52.43, parc:6, peso:0.21,
+    cores:['Marinho','Preto','Off-white'],
+    img:['assets/img/produtos/body-manga-longa-1.jpg','assets/img/produtos/body-manga-longa-2.jpg'],
+    desc:'Body de manga longa com decote quadrado, alça larga e costas fechadas. Malha poliamida de segunda pele com elastano que veste justo sem apertar. Fechamento inferior com botões de pressão. Peça-base para o dia a dia e para a noite.'
   },
   'cropped-manguinha': {
-    name:'CROPPED MANGUINHA', cat:'CROPPED', ref:'WF1004', ph:'g-rose', cor:'Rosé',
-    varejo:74.90, atacado:52.43, parc:6, peso:0.16,
-    cores:['Preto','Nude','Rosé']
+    name:'CROPPED MANGUINHA', cat:'CROPPED', ref:'WF1004', ph:'g-red', cor:'Vermelho',
+    varejo:44.90, atacado:31.43, parc:3, peso:0.16,
+    cores:['Vermelho','Preto','Nude'],
+    img:['assets/img/produtos/cropped-manguinha-1.jpg'],
+    desc:'Cropped de manga curta e gola redonda, comprimento na cintura. Malha poliamida com elastano, toque macio e caimento colado ao corpo. Combina com calça de cintura alta, saia e short jeans.'
   },
   'body-costas-livres': {
-    name:'BODY COSTAS LIVRES', cat:'BODY', ref:'WF1005', ph:'g-stone', cor:'Off-white',
-    varejo:94.90, atacado:66.43, parc:6, peso:0.18,
-    cores:['Preto','Off-white','Vinho']
+    name:'BODY COSTAS LIVRES', cat:'BODY', ref:'WF1005', ph:'g-peach', cor:'Pêssego',
+    varejo:74.90, atacado:52.43, parc:6, peso:0.18,
+    cores:['Pêssego','Preto','Off-white'],
+    img:['assets/img/produtos/body-costas-livres-1.jpg','assets/img/produtos/body-costas-livres-2.jpg'],
+    desc:'Body de manga longa com decote canoa na frente e costas totalmente abertas, com tira fina de amarração na lombar. Malha poliamida de segunda pele com elastano. Fechamento inferior com botões de pressão. Discreto de frente, impactante de costas.'
   }
 };
 
 const META_ATACADO = 12;          // peças variadas para liberar preço de fábrica
 const FRETE_GRATIS = 399.90;      // varejo
 const CUPOM = {code:'WOLFIE10', off:.10};
+const WHATSAPP = '5562984088708';  // número da loja (DDI+DDD+número, só dígitos)
 
 /* ---------- helpers ---------- */
 const $  = (s, r=document) => r.querySelector(s);
@@ -78,6 +89,25 @@ const Cart = {
     if (typeof renderCart === 'function') renderCart();
   }
 };
+
+/* ---------- checkout pelo WhatsApp ---------- */
+function checkoutWhatsApp(){
+  const itens = Cart.read();
+  if(!itens.length){ Toast.show('Sacola vazia', 'Adicione uma peça antes de finalizar'); return; }
+  const atacado = Cart.pieces() >= META_ATACADO;
+  const linhas = itens.map(i => {
+    const p = CATALOG[i.id]; const un = atacado ? p.atacado : p.varejo;
+    return `• ${i.qty}x ${p.name} (${p.ref}) — tam. ${i.size} — ${brl(un)} cada = ${brl(un * i.qty)}`;
+  });
+  const msg = [
+    'Olá, Wolfie! Quero finalizar meu pedido:', '',
+    ...linhas, '',
+    `Peças: ${Cart.pieces()}${atacado ? ' (preço de atacado)' : ''}`,
+    `Total: ${brl(Cart.total())}`, '',
+    'Pode me passar as formas de pagamento e o frete?'
+  ].join('\n');
+  open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+}
 
 /* ---------- toast ---------- */
 const Toast = {
@@ -181,6 +211,40 @@ function initHero(){
   restart();
 }
 
+/* ---------- 2b. PDP dinâmica: lê ?p=<id> e preenche a partir do CATALOG ---------- */
+function initPDP(){
+  const gal = $('.gal'); if(!gal) return;
+  const id = new URLSearchParams(location.search).get('p');
+  const p = CATALOG[id]; if(!p) return;
+  const parcela = brl(p.varejo / p.parc);
+  const titulo = p.name.toLowerCase().replace(/(^|\s)\S/g, c => c.toUpperCase());
+  document.title = titulo + ' — Wolfie';
+  const crumb = $('[data-crumb]'); if(crumb) crumb.textContent = p.name;
+  const crumbCat = crumb?.previousElementSibling; if(crumbCat?.tagName === 'A') crumbCat.textContent = p.cat;
+  $('.buy h1').textContent = p.name;
+  const price = $('.price-main');
+  price.firstChild.textContent = '\n        ' + brl(p.varejo) + '\n        ';
+  $('.price-pix', price).innerHTML = `<i data-ic="checkc"></i> ${brl(pix(p.varejo))} no PIX (5% off)`;
+  $('.inst b').textContent = `${p.parc}x de ${parcela}`;
+  $('.wholesale-hint b').textContent = `No atacado sai ${brl(p.atacado)}`;
+  $$('[data-add],[data-buy],[data-produto]').forEach(el => {
+    if('add' in el.dataset) el.dataset.add = id;
+    if('buy' in el.dataset) el.dataset.buy = id;
+    if('produto' in el.dataset) el.dataset.produto = id;
+  });
+  const cor = $('#out-color'); if(cor) cor.textContent = p.cor;
+  const row = $('[data-out="#out-color"]');
+  if(row) row.innerHTML = p.cores.map(c => `<button class="chip${c===p.cor?' is-on':''}">${c}</button>`).join('');
+  const desc = $('.acc__body'); if(desc && p.desc){
+    desc.innerHTML = desc.innerHTML
+      .replace(/(<h4>Detalhes do design:<\/h4>)[\s\S]*?(<br><br>)/, `$1\n        ${p.desc}\n        $2`)
+      .replace(/WF\d{4}/, p.ref);
+  }
+  $('.gal__thumbs').innerHTML = p.img.map((src,i) => `<div class="ph grain ${p.ph}${i?'':' is-on'}"><img src="${src}" alt="${p.name} — foto ${i+1}"></div>`).join('');
+  $('.gal__stage .ph').outerHTML = `<div class="ph grain shine ${p.ph}"><img src="${p.img[0]}" alt="${p.name}"></div>`;
+  initIcons(price);
+}
+
 /* ---------- 3. galeria + lente de zoom real (PDP) ---------- */
 const ZOOM = 2.4;
 function initGallery(){
@@ -191,13 +255,20 @@ function initGallery(){
   lens.innerHTML = '<div class="ph grain"></div>';
   const inner = $('.ph', lens);
 
-  const syncLens = () => { inner.className = main.className.replace('hero__bg',''); };
+  const syncLens = () => {
+    inner.className = main.className.replace('hero__bg','');
+    const im = $('img', main);
+    inner.innerHTML = im ? `<img src="${im.src}" alt="">` : '';
+  };
   syncLens();
 
   $$('.gal__thumbs .ph').forEach(t => t.addEventListener('click', () => {
     $$('.gal__thumbs .ph').forEach(x => x.classList.remove('is-on'));
     t.classList.add('is-on');
-    main.className = 'ph grain shine ' + [...t.classList].find(c => c.startsWith('g-'));
+    main.className = 'ph grain shine ' + ([...t.classList].find(c => c.startsWith('g-')) || '');
+    const im = $('img', t), mi = $('img', main);
+    if(im){ if(mi) mi.src = im.src; else main.innerHTML = `<img src="${im.src}" alt="">`; }
+    else if(mi) mi.remove();
     syncLens();
   }));
 
@@ -245,6 +316,8 @@ function initAtmosphere(){
     if(!base) return;
     const el = document.createElement('div');
     el.className = `ph grain ph--alt ${[...base.classList].find(c => c.startsWith('g-')) || ''}`;
+    const alt = base.dataset.alt || $('img', base)?.src;
+    if(alt) el.innerHTML = `<img src="${alt}" alt="" loading="lazy">`;
     base.after(el);
   });
 
@@ -347,8 +420,14 @@ function initBuy(){
     const size = $('.opt__row [data-size].is-on')?.textContent.trim() || 'M';
     const qty  = parseInt($('#qty')?.value || 1, 10);
     Cart.add(b.dataset.buy, size, qty);
-    location.href = 'checkout.html';
+    checkoutWhatsApp();
   }));
+  /* qualquer botão "finalizar compra" abre o pedido no WhatsApp */
+  document.addEventListener('click', e => {
+    const b = e.target.closest('[data-wpp-checkout]');
+    if(!b) return;
+    e.preventDefault(); checkoutWhatsApp();
+  });
   const q = $('#qty');
   if(q){
     $('#qty-dec')?.addEventListener('click', () => q.value = Math.max(1, +q.value - 1));
@@ -365,7 +444,7 @@ function renderCart(){
   list.innerHTML = items.length ? items.map((it, idx) => {
     const p = CATALOG[it.id], wholesale = Cart.pieces() >= META_ATACADO;
     return `<div class="cart-item">
-      <div class="ph grain ${p.ph}"></div>
+      <div class="ph grain ${p.ph}">${p.img ? `<img src="${p.img[0]}" alt="">` : ""}</div>
       <div class="cart-item__i">
         <b>${p.name} – ${it.size} / ${p.cor}</b>
         <span>${it.qty}x</span>
@@ -412,7 +491,7 @@ function initCheckout(){
   $('#ck-prods').innerHTML = items.map(it => {
     const p = CATALOG[it.id];
     return `<div class="ck-prod">
-      <div class="ph grain ${p.ph}"></div>
+      <div class="ph grain ${p.ph}">${p.img ? `<img src="${p.img[0]}" alt="">` : ""}</div>
       <div><b>${p.name} · ${it.size} / ${p.cor.toUpperCase()}</b>
       <em>${brl((wholesale ? p.atacado : p.varejo) * it.qty)}</em>
       <span>Qtd: ${it.qty}</span></div></div>`;
@@ -467,7 +546,7 @@ function initFloats(){
 /* ---------- boot ---------- */
 document.addEventListener('DOMContentLoaded', () => {
   initIcons(); initAtmosphere();
-  initDrawer(); initHero(); initGallery(); initOptions(); initSizes();
+  initDrawer(); initHero(); initPDP(); initGallery(); initOptions(); initSizes();
   initAcc(); initModals(); initBuy(); initFloats();
   Cart.paint(); renderCart(); initPolicy(); initCheckout();
 });
@@ -475,5 +554,6 @@ document.addEventListener('DOMContentLoaded', () => {
 window.WolfieCart = Cart;              // exposto para o frete.js e para debug
 window.WolfieCatalog = CATALOG;        // preços e pesos
 window.WOLFIE_META_ATACADO = META_ATACADO;
+window.WolfieCheckout = checkoutWhatsApp; // pedido pelo WhatsApp
 window.WolfieIcons = initIcons;        // injeta SVG em conteúdo criado depois
 })();

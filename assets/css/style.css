@@ -90,6 +90,15 @@ section{padding-block:46px}
 .g-rose  {--g:linear-gradient(145deg,#f3c9cf,#d38792 60%,#a95c69)}
 .g-stone {--g:linear-gradient(145deg,#e6e6e6,#bcbcbc 60%,#8f8f8f)}
 .g-lagoon{--g:linear-gradient(145deg,#a9dfd8,#3f9e94 60%,#1f6b64)}
+.g-navy  {--g:linear-gradient(145deg,#3b4a7a,#1c2a55 60%,#0f1733)}
+.g-red   {--g:linear-gradient(145deg,#f06a6a,#c72b2b 60%,#8a1616)}
+.g-peach {--g:linear-gradient(145deg,#f2b79a,#d98a66 60%,#a85f40)}
+/* foto real dentro do placeholder */
+.ph>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;display:block;z-index:1}
+.ph:has(>img)::after,.ph:has(>img)::before{display:none}
+.card__media .ph--alt:has(>img){transform:scale(1.05);filter:none}
+.card:hover .card__media .ph--alt:has(>img){transform:scale(1)}
+.lens .ph>img{position:absolute;inset:0}
 
 /* ==========================================================================
    5. TOPBAR
@@ -107,6 +116,7 @@ section{padding-block:46px}
 .header__in{display:flex;align-items:center;gap:26px;padding-block:14px}
 
 .logo{display:flex;align-items:center;gap:9px;flex-shrink:0}
+.logo img{max-height:40px;width:auto}          /* trava: o lockup nunca estoura o cabeçalho */
 .logo{gap:11px}
 .logo__mark{width:38px;height:38px;flex:0 0 auto;border-radius:9px;overflow:hidden;
   box-shadow:0 3px 10px rgba(17,17,17,.18);display:block;transition:var(--t)}
