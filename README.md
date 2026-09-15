@@ -61,6 +61,7 @@ GitHub Pages. Ative "Enforce HTTPS" em Settings → Pages.
 ├── FRETE.md            como o frete funciona e como ligar na transportadora
 ├── .nojekyll           desliga o Jekyll no GitHub Pages
 ├── CONTRIBUTING.md     onde mexer em cada coisa
+├── PROJETO.md          histórico, análise de mercado e decisões técnicas
 └── README.md
 ```
 
@@ -79,11 +80,14 @@ GitHub Pages. Ative "Enforce HTTPS" em Settings → Pages.
 
 | Produto | Categoria | Varejo | PIX (−5%) | Atacado (12+) | Parcelas |
 |---|---|---|---|---|---|
-| Body Basic | BODY | R$ 79,90 | R$ 75,91 | R$ 55,93 | 6x R$ 13,32 |
-| Cropped Multiformas | CROPPED | ~~R$ 99,90~~ **R$ 69,90** | — | R$ 48,93 | 3x R$ 23,30 |
-| Body com Recorte Quadrado | BODY | R$ 99,90 | R$ 94,91 | R$ 69,93 | 6x R$ 16,65 |
-| Cropped Manguinha | CROPPED | R$ 74,90 | R$ 71,16 | R$ 52,43 | 6x R$ 12,48 |
-| Body Costas Livres | BODY | R$ 94,90 | R$ 90,16 | R$ 66,43 | 6x R$ 15,82 |
+| Body Basic | BODY | R$ 54,90 | R$ 52,16 | R$ 38,43 | 6x R$ 9,15 |
+| Cropped Multiformas | CROPPED | R$ 44,90 | R$ 42,66 | R$ 31,43 | 3x R$ 14,97 |
+| Body Manga Longa | BODY | R$ 74,90 | R$ 71,16 | R$ 52,43 | 6x R$ 12,48 |
+| Cropped Manguinha | CROPPED | R$ 44,90 | R$ 42,66 | R$ 31,43 | 3x R$ 14,97 |
+| Body Costas Livres | BODY | R$ 74,90 | R$ 71,16 | R$ 52,43 | 6x R$ 12,48 |
+
+Fotos dos produtos em `assets/img/produtos/<id>-1.jpg` (frente) e `<id>-2.jpg` (costas).
+A página `produto.html?p=<id>` é preenchida a partir do `CATALOG`.
 
 Preço de atacado = 70% do varejo. Para mudar qualquer valor, edite `CATALOG` no topo de
 `assets/js/app.js` **e** o card correspondente em `index.html` / `colecao.html` / `produto.html`
@@ -216,10 +220,11 @@ Padrões das grandes de moda, implementados:
 ## Antes de ir para produção
 
 - [ ] Trocar `SEU-USUARIO.github.io` pela URL real (canonical / og:url / og:image)
-- [ ] Trocar o WhatsApp `5562999990000` pelo número real (links `wa.me` e rodapé)
-- [ ] Ligar Facebook e TikTok (hoje `href="#"`) — Instagram já aponta para `@usewolfie.br`
+- [x] WhatsApp da loja configurado: `5562984088708` (constante `WHATSAPP` em `app.js`, links `wa.me` e rodapé)
+- [ ] Facebook e TikTok removidos do rodapé até existirem perfis — Instagram aponta para `@usewolfie.br`
 - [ ] Substituir CNPJ, endereço e e-mail de contato
-- [ ] Trocar os placeholders `.ph` por fotos reais
+- [x] Fotos reais dos 5 produtos em `assets/img/produtos/`
 - [ ] (opcional) Deploy da `api/frete.js` com token da transportadora — ver FRETE.md
-- [ ] Plugar um checkout de verdade (Yampi/Appmax) no `FINALIZAR COMPRA`
+- [x] Checkout pelo WhatsApp (`checkoutWhatsApp` em `app.js`); `checkout.html` redireciona para o carrinho
+- [ ] (futuro) Plugar checkout com pagamento online (Yampi/Appmax) se quiser sair do WhatsApp
 - [ ] Adicionar GA4 / Meta Pixel se for rodar tráfego pago

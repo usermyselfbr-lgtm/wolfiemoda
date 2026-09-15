@@ -593,8 +593,9 @@ body.checkout{background:#f7f7f8}
   .grid{grid-template-columns:repeat(3,1fr)}
   .fitness{grid-template-columns:1fr 1fr}
   .footer__cols{grid-template-columns:1fr 1fr}
-  .pdp{grid-template-columns:1fr;gap:26px}
-  .cart{grid-template-columns:1fr}
+  .pdp{grid-template-columns:minmax(0,1fr);gap:26px}
+  .cart{grid-template-columns:minmax(0,1fr)}
+  .summary{position:static}
   .ck-grid{grid-template-columns:1fr}
   .modal--wide{grid-template-columns:1fr;max-width:420px}
 }
@@ -615,7 +616,10 @@ body.checkout{background:#f7f7f8}
   .hero__bg{aspect-ratio:3/4;min-height:420px}
   .perks__in{flex-wrap:wrap;gap:14px}
   .perks__i{flex:1 0 45%;border:0;justify-content:flex-start;font-size:12px}
-  .gal{grid-template-columns:1fr}
+  .gal{grid-template-columns:minmax(0,1fr)}
+  .gal__hint{display:none}
+  .crumb{flex-wrap:wrap;gap:4px 12px}
+  .crumb>div{min-width:0;overflow-wrap:anywhere}
   .gal__thumbs{flex-direction:row;order:2;overflow:auto}
   .gal__thumbs .ph{flex:0 0 74px}
   .lens{display:none}
@@ -1224,3 +1228,14 @@ body::before{filter:none;will-change:auto}
   :root{--wrap:1440px}
   .grid--5{gap:22px}
 }
+
+/* ==========================================================================
+   24. LANÇAMENTO — proteções de largura (mobile) e busca
+   ========================================================================== */
+html,body{overflow-x:clip}
+.pdp>*,.cart>*,.gal>*,.buy>*,.cart-item>*{min-width:0}
+.cart-item>div:not(.ph){flex:1 1 auto}
+.opt__row,.flags,.tools{flex-wrap:wrap}
+.ship>div{min-width:0;overflow-wrap:anywhere}
+img{max-width:100%}
+.plp-empty{padding:40px 0;text-align:center;color:var(--muted)}

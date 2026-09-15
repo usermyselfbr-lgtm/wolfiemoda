@@ -220,6 +220,8 @@ function initPDP(){
   const titulo = p.name.toLowerCase().replace(/(^|\s)\S/g, c => c.toUpperCase());
   document.title = titulo + ' — Wolfie';
   const crumb = $('[data-crumb]'); if(crumb) crumb.textContent = p.name;
+  const ids = Object.keys(CATALOG), nx = ids[(ids.indexOf(id) + 1) % ids.length];
+  const next = $('[data-next]'); if(next) next.href = 'produto.html?p=' + nx;
   const crumbCat = crumb?.previousElementSibling; if(crumbCat?.tagName === 'A') crumbCat.textContent = p.cat;
   $('.buy h1').textContent = p.name;
   const price = $('.price-main');
@@ -343,9 +345,13 @@ function initAtmosphere(){
 
   /* rede de segurança: ninguém fica invisível por bug de observer, print ou captura */
   addEventListener('beforeprint', showAll);
-  setTimeout(() => $$('.reveal:not(.is-in), .stagger:not(.is-in)').forEach(el => {
-    if(el.getBoundingClientRect().top < innerHeight * 3) el.classList.add('is-in');
-  }), 2500);
+  const revelarVisiveis = () => $$('.reveal:not(.is-in), .stagger:not(.is-in)').forEach(el => {
+    if(el.getBoundingClientRect().top < innerHeight * 1.5) el.classList.add('is-in');
+  });
+  addEventListener('resize', revelarVisiveis, {passive:true});
+  addEventListener('load', revelarVisiveis);
+  setTimeout(revelarVisiveis, 600);
+  setTimeout(showAll, 1200);   // conteúdo invisível é pior que animação perdida
 }
 
 /* ---------- 4. seletores de tamanho/cor ---------- */
@@ -530,7 +536,22 @@ function initCheckout(){
 /* ---------- 12. modal de política ao abrir o carrinho ---------- */
 function initPolicy(){
   const m = $('#policy');
-  if(m && Cart.pieces() > 0) setTimeout(() => m.classList.add('is-on'), 700);
+  if(!m || Cart.pieces() === 0) return;
+  try{ if(sessionStorage.getItem('wolfie.policy')) return; sessionStorage.setItem('wolfie.policy','1'); }catch{}
+  setTimeout(() => m.classList.add('is-on'), 700);
+}
+
+/* ---------- 12b. busca: leva ao catálogo com ?q= ---------- */
+function initSearch(){
+  $$('form.search').forEach(f => {
+    const inp = $('input', f);
+    const go = () => {
+      const q = inp.value.trim();
+      location.href = 'colecao.html' + (q ? '?q=' + encodeURIComponent(q) : '');
+    };
+    f.addEventListener('submit', e => { e.preventDefault(); go(); });
+    $('button', f)?.addEventListener('click', e => { e.preventDefault(); go(); });
+  });
 }
 
 /* ---------- 13. aba de cupom + balão de chat ---------- */
@@ -541,13 +562,28 @@ function initFloats(){
   });
   const bubble = $('.chat-bubble');
   if(bubble) setTimeout(() => bubble.classList.add('is-on'), 4200);
+
+  /* newsletter: sem backend de e-mail, o cadastro chega pelo WhatsApp */
+  $$('[data-news-btn]').forEach(btn => {
+    const inp = btn.parentElement.querySelector('[data-news]');
+    const enviar = () => {
+      const v = (inp?.value || '').trim();
+      if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){ Toast.show('E-mail inválido', 'Confira o endereço e tente de novo'); inp?.focus(); return; }
+      const msg = `Olá, Wolfie! Quero receber as novidades e ofertas. Meu e-mail: ${v}`;
+      open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+      Toast.show('Quase lá', 'Confirme o envio no WhatsApp para entrar na lista');
+      inp.value = '';
+    };
+    btn.addEventListener('click', enviar);
+    inp?.addEventListener('keydown', e => { if(e.key === 'Enter'){ e.preventDefault(); enviar(); } });
+  });
 }
 
 /* ---------- boot ---------- */
 document.addEventListener('DOMContentLoaded', () => {
   initIcons(); initAtmosphere();
   initDrawer(); initHero(); initPDP(); initGallery(); initOptions(); initSizes();
-  initAcc(); initModals(); initBuy(); initFloats();
+  initAcc(); initModals(); initBuy(); initFloats(); initSearch();
   Cart.paint(); renderCart(); initPolicy(); initCheckout();
 });
 

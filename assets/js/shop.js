@@ -254,6 +254,23 @@ function filtros(){
     if(p){ c.dataset.cat = p.cat; c.dataset.preco = p.varejo; c.dataset.id = p.id; }
   });
 
+  // termo vindo da busca do header (?q=)
+  const norm = t => (t || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  const q = norm(new URLSearchParams(location.search).get('q'));
+  if(q){
+    const termos = q.split(/\s+/).filter(Boolean);
+    let vis = 0;
+    cards.forEach(c => {
+      const alvo = norm($('.card__name', c)?.textContent + ' ' + (c.dataset.cat || ''));
+      const ok = termos.every(t => alvo.includes(t));
+      c.style.display = ok ? '' : 'none'; if(ok) vis++;
+    });
+    const h = $('.plp-head h1, .plp h1, h1');
+    if(h) h.insertAdjacentHTML('afterend', `<p class="plp-q">Resultados para <b>“${q}”</b> · ${vis} ${vis === 1 ? 'produto' : 'produtos'} · <a href="colecao.html">ver tudo</a></p>`);
+    if(!vis) grid.insertAdjacentHTML('afterend', `<p class="plp-empty">Nenhuma peça encontrada. Tente “body” ou “cropped”.</p>`);
+    $$('input[type="search"]').forEach(i => i.value = new URLSearchParams(location.search).get('q'));
+  }
+
   const cats = [...new Set(cards.map(c => c.dataset.cat).filter(Boolean))];
   const box = document.createElement('div');
   box.className = 'filters';
