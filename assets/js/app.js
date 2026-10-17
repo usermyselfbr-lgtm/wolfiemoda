@@ -35,7 +35,7 @@ const CATALOG = {
     name:'CROPPED MANGUINHA', cat:'CROPPED', ref:'WF1004', ph:'g-red', cor:'Vermelho',
     varejo:44.90, atacado:31.43, parc:3, peso:0.16,
     cores:['Vermelho','Preto','Nude'],
-    img:['assets/img/produtos/cropped-manguinha-1.jpg'],
+    img:['assets/img/produtos/cropped-manguinha-1.jpg','assets/img/produtos/cropped-manguinha-2.jpg'],
     desc:'Cropped de manga curta e gola redonda, comprimento na cintura. Malha poliamida com elastano, toque macio e caimento colado ao corpo. Combina com calça de cintura alta, saia e short jeans.'
   },
   'body-costas-livres': {
@@ -475,6 +475,7 @@ function initModals(){
   document.addEventListener('keydown', e => {
     if(e.key === 'Escape') $$('.ov.is-on').forEach(o => o.classList.remove('is-on'));
   });
+  if(location.hash === '#medidas') setTimeout(() => $('#sizes')?.classList.add('is-on'), 400);
 }
 
 /* ---------- 8. frete: implementado em assets/js/frete.js ---------- */

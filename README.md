@@ -250,3 +250,14 @@ Padrões das grandes de moda, implementados:
   CNPJ fictício. Selo falso é risco jurídico (CDC art. 37) e queima credibilidade quando percebido.
 - **Correções:** botão "Calcular" do CEP saía da tela no mobile; modal de medidas vazava; saída do CEP
   escapada contra HTML injetado; pasta duplicada `wolfie/` removida (conteúdo duplicado no Google).
+
+## Banner e destaques (out/2026)
+
+- **Banner da home:** 3 looks reais (Body Basic, Body Costas Livres, Cropped Manguinha), cada um com
+  preço de varejo e de atacado, clicável para a peça. No mobile vira carrossel com deslize lateral.
+- **Destaques** (capas estilo stories, em `assets/img/destaques/`, 240×240): Novidades, Mais vendido,
+  Costas livres, Bodies, Croppeds, Atacado, Tamanhos (abre a tabela via `produto.html?p=...#medidas`) e Trocas.
+- **Fotos novas:** `body-basic-1/2`, `body-costas-livres-1` (costas — o diferencial da peça) e
+  `cropped-manguinha-1/2`. Otimizadas para 900px de largura, JPG progressivo q82.
+- **Pendente:** frente do Body Costas Livres com a mesma modelo → salvar como
+  `assets/img/produtos/body-costas-livres-2.jpg` (hoje é a foto antiga).
