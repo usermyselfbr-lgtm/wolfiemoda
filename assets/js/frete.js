@@ -44,6 +44,7 @@ const TABELA = {
 const regiaoDaUF = uf => Object.keys(REGIOES).find(k => REGIOES[k].uf.includes(uf)) || 'SUDESTE';
 const brl = n => 'R$ ' + n.toFixed(2).replace('.', ',');
 const soNumero = s => (s || '').replace(/\D/g, '');
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 /* ---------- 1. consulta de CEP (duas fontes, com cascata) ---------- */
 async function buscarCEP(cepRaw){
@@ -176,13 +177,13 @@ function pintar(out, r){
   out.innerHTML = `
     <div class="frete-end">
       <i data-ic="pin"></i>
-      <div><b>${r.endereco.rua ? r.endereco.rua + ' · ' : ''}${r.endereco.bairro || ''}</b>
-      <span>${r.endereco.cidade}/${r.endereco.uf} · CEP ${r.endereco.cep.replace(/(\d{5})(\d{3})/,'$1-$2')}</span></div>
+      <div><b>${r.endereco.rua ? esc(r.endereco.rua) + ' · ' : ''}${esc(r.endereco.bairro)}</b>
+      <span>${esc(r.endereco.cidade)}/${esc(r.endereco.uf)} · CEP ${r.endereco.cep.replace(/(\d{5})(\d{3})/,'$1-$2')}</span></div>
     </div>
     <ul class="frete-ops">
       ${r.opcoes.map(o => `
         <li class="${o.gratis ? 'is-free' : ''}">
-          <div class="frete-ops__n"><b>${o.nome}</b><span>${o.transportadora}</span></div>
+          <div class="frete-ops__n"><b>${esc(o.nome)}</b><span>${esc(o.transportadora)}</span></div>
           <div class="frete-ops__p">
             <b>${o.gratis ? 'Grátis' : brl(o.preco)}</b>
             ${o.precoOriginal ? `<s>${brl(o.precoOriginal)}</s>` : ''}

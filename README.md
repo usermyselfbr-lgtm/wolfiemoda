@@ -219,12 +219,34 @@ Padrões das grandes de moda, implementados:
 
 ## Antes de ir para produção
 
-- [ ] Trocar `SEU-USUARIO.github.io` pela URL real (canonical / og:url / og:image)
+- [x] URLs canônicas, Open Graph e JSON-LD apontando para `https://wolfiemoda.com/`
+- [x] `robots.txt` + `sitemap.xml` (enviar o sitemap no Google Search Console)
 - [x] WhatsApp da loja configurado: `5562984088708` (constante `WHATSAPP` em `app.js`, links `wa.me` e rodapé)
 - [ ] Facebook e TikTok removidos do rodapé até existirem perfis — Instagram aponta para `@usewolfie.br`
-- [ ] Substituir CNPJ, endereço e e-mail de contato
+- [ ] CNPJ real no rodapé (o placeholder `00.000.000/0001-00` foi removido) e conferir o e-mail `contato@wolfie.com.br`
+- [ ] Confirmar as medidas do **GG** na tabela (`MEASURES` em `app.js` — valores extrapolados da grade P/M/G)
 - [x] Fotos reais dos 5 produtos em `assets/img/produtos/`
 - [ ] (opcional) Deploy da `api/frete.js` com token da transportadora — ver FRETE.md
 - [x] Checkout pelo WhatsApp (`checkoutWhatsApp` em `app.js`); `checkout.html` redireciona para o carrinho
 - [ ] (futuro) Plugar checkout com pagamento online (Yampi/Appmax) se quiser sair do WhatsApp
-- [ ] Adicionar GA4 / Meta Pixel se for rodar tráfego pago
+- [ ] Ativar GA4 / Meta Pixel: preencher `GA4_ID` e `META_PIXEL_ID` no topo de `assets/js/analytics.js`
+
+## Camada de crescimento (out/2026)
+
+- **Home com proposta de valor:** hero com promessa + dois CTAs (vitrine / revenda), categorias com foto,
+  bloco **Atacado** (`#atacado`) com passo a passo e conta de economia real, FAQ com `FAQPage` JSON-LD.
+- **Preço de atacado visível no card** (antes era um traço). É o gancho da revendedora; esconder sem
+  ter login só gerava atrito.
+- **Tracking** em `assets/js/analytics.js` (desligado até preencher os IDs). Eventos GA4 → Meta:
+  `view_item`→ViewContent, `add_to_cart`→AddToCart, `begin_checkout`→InitiateCheckout (clique em
+  finalizar no WhatsApp), `generate_lead`→Lead (newsletter), `contact`→Contact (qualquer link wa.me).
+  UTMs de primeiro toque (`utm_*`, `fbclid`, `gclid`) ficam salvas e vão no fim da mensagem do pedido —
+  dá para saber qual campanha gerou cada venda no WhatsApp.
+- **Pedido no WhatsApp** agora leva nº do pedido, **cor escolhida** (antes era perdida), total no PIX,
+  CEP e frete cotado.
+- **PDP:** canonical/OG/JSON-LD trocam por produto (`?p=`), frete abaixo do botão de compra no mobile,
+  tabela com GG, removidos "Provador Virtual" e "Sedex FULL" (prometiam o que não existe).
+- **Confiança:** removidos selos "Google My Business ★★★★★" e "Google Site Seguro" (não eram reais) e o
+  CNPJ fictício. Selo falso é risco jurídico (CDC art. 37) e queima credibilidade quando percebido.
+- **Correções:** botão "Calcular" do CEP saía da tela no mobile; modal de medidas vazava; saída do CEP
+  escapada contra HTML injetado; pasta duplicada `wolfie/` removida (conteúdo duplicado no Google).

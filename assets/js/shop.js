@@ -109,7 +109,7 @@ const Mini = {
         <div class="ph grain ${p.ph}">${p.img ? `<img src="${p.img[0]}" alt="">` : ""}</div>
         <div style="flex:1">
           <b>${p.name}</b>
-          <span>${it.size} · ${p.cor}</span>
+          <span>${it.size} · ${window.WolfieCor ? WolfieCor(it) : p.cor}</span>
           <em>${brl(preco)}</em>
           <div class="mini__q">
             <button data-q="-" data-i="${idx}" aria-label="Diminuir">−</button>
