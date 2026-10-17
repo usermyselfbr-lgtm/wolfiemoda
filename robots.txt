@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /carrinho.html
+Disallow: /checkout.html
+Disallow: /api/
+
+Sitemap: https://wolfiemoda.com/sitemap.xml

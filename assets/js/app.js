@@ -35,7 +35,7 @@ const CATALOG = {
     name:'CROPPED MANGUINHA', cat:'CROPPED', ref:'WF1004', ph:'g-red', cor:'Vermelho',
     varejo:44.90, atacado:31.43, parc:3, peso:0.16,
     cores:['Vermelho','Preto','Nude'],
-    img:['assets/img/produtos/cropped-manguinha-1.jpg'],
+    img:['assets/img/produtos/cropped-manguinha-1.jpg','assets/img/produtos/cropped-manguinha-2.jpg'],
     desc:'Cropped de manga curta e gola redonda, comprimento na cintura. Malha poliamida com elastano, toque macio e caimento colado ao corpo. Combina com calça de cintura alta, saia e short jeans.'
   },
   'body-costas-livres': {
@@ -57,17 +57,31 @@ const $  = (s, r=document) => r.querySelector(s);
 const $$ = (s, r=document) => [...r.querySelectorAll(s)];
 const brl = n => 'R$ ' + n.toFixed(2).replace('.', ',');
 const pix = n => n * .95;   // 5% no PIX
+const SITE = 'https://wolfiemoda.com/';
+const track = (ev, p) => window.WolfieTrack?.(ev, p);
+const gaItem = (id, qty=1, atacado=false) => {
+  const p = CATALOG[id];
+  return {item_id:p.ref, item_name:p.name, item_category:p.cat, price:atacado ? p.atacado : p.varejo, quantity:qty};
+};
+
+/* cor: a escolhida na PDP; itens antigos da sacola (sem cor salva) caem na cor padrão */
+const corDo = i => i.cor || CATALOG[i.id]?.cor || '';
+const corEscolhida = id => {
+  const out = document.getElementById('out-color')?.textContent.trim();
+  return out && CATALOG[id]?.cores.includes(out) ? out : CATALOG[id].cor;
+};
 
 /* ---------- carrinho (localStorage) ---------- */
 const Cart = {
   read(){ try{ return JSON.parse(localStorage.getItem('wolfie.cart')) || []; }catch{ return []; } },
   write(items){ localStorage.setItem('wolfie.cart', JSON.stringify(items)); this.paint(); },
-  add(id, size='M', qty=1){
+  add(id, size='M', qty=1, cor=corEscolhida(id)){
     const items = this.read();
-    const hit = items.find(i => i.id === id && i.size === size);
-    hit ? hit.qty += qty : items.push({id, size, qty});
+    const hit = items.find(i => i.id === id && i.size === size && (i.cor || CATALOG[id].cor) === cor);
+    hit ? hit.qty += qty : items.push({id, size, qty, cor});
     this.write(items);
-    Toast.show('Adicionado à sacola', CATALOG[id].name + ' • ' + size);
+    track('add_to_cart', {value:CATALOG[id].varejo * qty, items:[gaItem(id, qty)]});
+    Toast.show('Adicionado à sacola', `${CATALOG[id].name} • ${size} • ${cor}`);
   },
   remove(idx){ const i = this.read(); i.splice(idx,1); this.write(i); },
   pieces(){ return this.read().reduce((s,i) => s + i.qty, 0); },
@@ -91,21 +105,36 @@ const Cart = {
 };
 
 /* ---------- checkout pelo WhatsApp ---------- */
+/* última cotação de frete feita na sessão (vem do frete.js) */
+let ultimoFrete = null;
+document.addEventListener('wolfie:frete', e => { ultimoFrete = e.detail; });
+
 function checkoutWhatsApp(){
   const itens = Cart.read();
   if(!itens.length){ Toast.show('Sacola vazia', 'Adicione uma peça antes de finalizar'); return; }
   const atacado = Cart.pieces() >= META_ATACADO;
+  const total = Cart.total();
   const linhas = itens.map(i => {
     const p = CATALOG[i.id]; const un = atacado ? p.atacado : p.varejo;
-    return `• ${i.qty}x ${p.name} (${p.ref}) — tam. ${i.size} — ${brl(un)} cada = ${brl(un * i.qty)}`;
+    return `• ${i.qty}x ${p.name} (${p.ref}) — tam. ${i.size} — cor ${corDo(i)} — ${brl(un)} cada = ${brl(un * i.qty)}`;
   });
+  // nº curto para a loja localizar o pedido na conversa
+  const pedido = 'W' + Date.now().toString(36).slice(-5).toUpperCase();
+  const frete = ultimoFrete ? [
+    `CEP: ${ultimoFrete.endereco.cep.replace(/(\d{5})(\d{3})/, '$1-$2')} (${ultimoFrete.endereco.cidade}/${ultimoFrete.endereco.uf})`,
+    'Frete cotado: ' + ultimoFrete.opcoes.map(o => `${o.nome} ${o.gratis ? 'grátis' : brl(o.preco)}`).join(' · ')
+  ] : ['CEP para entrega: '];
+  const o = window.WolfieOrigem?.();
   const msg = [
-    'Olá, Wolfie! Quero finalizar meu pedido:', '',
+    `Olá, Wolfie! Quero finalizar meu pedido #${pedido}:`, '',
     ...linhas, '',
     `Peças: ${Cart.pieces()}${atacado ? ' (preço de atacado)' : ''}`,
-    `Total: ${brl(Cart.total())}`, '',
-    'Pode me passar as formas de pagamento e o frete?'
+    `Total: ${brl(total)}${atacado ? '' : ` · no PIX ${brl(pix(total))}`}`,
+    ...frete, '',
+    'Pode me passar o pagamento e o prazo de envio?',
+    ...(o?.utm_source ? ['', `(origem: ${[o.utm_source, o.utm_campaign].filter(Boolean).join(' / ')})`] : [])
   ].join('\n');
+  track('begin_checkout', {value:total, transaction_id:pedido, items:itens.map(i => gaItem(i.id, i.qty, atacado))});
   open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
 }
 
@@ -215,7 +244,14 @@ function initHero(){
 function initPDP(){
   const gal = $('.gal'); if(!gal) return;
   const id = new URLSearchParams(location.search).get('p');
-  const p = CATALOG[id]; if(!p) return;
+  const p = CATALOG[id];
+  if(!p){
+    const atual = $('[data-add]')?.dataset.add;
+    if(CATALOG[atual]) track('view_item', {value:CATALOG[atual].varejo, items:[gaItem(atual)]});
+    return;
+  }
+  seoProduto(id, p);
+  track('view_item', {value:p.varejo, items:[gaItem(id)]});
   const parcela = brl(p.varejo / p.parc);
   const titulo = p.name.toLowerCase().replace(/(^|\s)\S/g, c => c.toUpperCase());
   document.title = titulo + ' — Wolfie';
@@ -245,6 +281,35 @@ function initPDP(){
   $('.gal__thumbs').innerHTML = p.img.map((src,i) => `<div class="ph grain ${p.ph}${i?'':' is-on'}"><img src="${src}" alt="${p.name} — foto ${i+1}"></div>`).join('');
   $('.gal__stage .ph').outerHTML = `<div class="ph grain shine ${p.ph}"><img src="${p.img[0]}" alt="${p.name}"></div>`;
   initIcons(price);
+}
+
+/* canonical, Open Graph e JSON-LD da peça aberta (a PDP é uma página só para os 5 SKUs) */
+function seoProduto(id, p){
+  const url = SITE + 'produto.html?p=' + id;
+  const titulo = p.name.toLowerCase().replace(/(^|\s)\S/g, c => c.toUpperCase());
+  const set = (sel, attr, val) => { const el = $(sel); if(el) el.setAttribute(attr, val); };
+  set('link[rel="canonical"]', 'href', url);
+  set('meta[property="og:url"]', 'content', url);
+  set('meta[property="og:title"]', 'content', titulo + ' — Wolfie');
+  set('meta[name="twitter:title"]', 'content', titulo + ' — Wolfie');
+  set('meta[property="og:image"]', 'content', SITE + p.img[0]);
+  set('meta[name="twitter:image"]', 'content', SITE + p.img[0]);
+  set('meta[name="description"]', 'content', `${titulo} Wolfie por ${brl(p.varejo)} ou ${brl(p.atacado)} no atacado (12+ peças). ${p.desc.split('. ')[0]}.`);
+  const lds = $$('script[type="application/ld+json"]');
+  lds.forEach(s => {
+    try{
+      const d = JSON.parse(s.textContent);
+      if(d['@type'] === 'Product'){
+        Object.assign(d, {name:titulo, sku:p.ref, description:p.desc, image:p.img.map(i => SITE + i)});
+        Object.assign(d.offers, {url, price:p.varejo.toFixed(2)});
+      }
+      if(d['@type'] === 'BreadcrumbList'){
+        d.itemListElement[1].name = p.cat[0] + p.cat.slice(1).toLowerCase();
+        d.itemListElement[2].name = titulo;
+      }
+      s.textContent = JSON.stringify(d);
+    }catch{}
+  });
 }
 
 /* ---------- 3. galeria + lente de zoom real (PDP) ---------- */
@@ -372,7 +437,8 @@ function initOptions(){
 const MEASURES = {
   P:{Busto:'90 – 94 cm',  Cintura:'68 – 72 cm', Quadril:'96 – 100 cm'},
   M:{Busto:'98 – 102 cm', Cintura:'76 – 80 cm', Quadril:'104 – 108 cm'},
-  G:{Busto:'106 – 110 cm',Cintura:'84 – 88 cm', Quadril:'112 – 116 cm'}
+  G:{Busto:'106 – 110 cm',Cintura:'84 – 88 cm', Quadril:'112 – 116 cm'},
+  GG:{Busto:'114 – 118 cm',Cintura:'92 – 96 cm', Quadril:'120 – 124 cm'}
 };
 function initSizes(){
   const box = $('#measures');
@@ -409,6 +475,7 @@ function initModals(){
   document.addEventListener('keydown', e => {
     if(e.key === 'Escape') $$('.ov.is-on').forEach(o => o.classList.remove('is-on'));
   });
+  if(location.hash === '#medidas') setTimeout(() => $('#sizes')?.classList.add('is-on'), 400);
 }
 
 /* ---------- 8. frete: implementado em assets/js/frete.js ---------- */
@@ -452,7 +519,7 @@ function renderCart(){
     return `<div class="cart-item">
       <div class="ph grain ${p.ph}">${p.img ? `<img src="${p.img[0]}" alt="">` : ""}</div>
       <div class="cart-item__i">
-        <b>${p.name} – ${it.size} / ${p.cor}</b>
+        <b>${p.name} – ${it.size} / ${corDo(it)}</b>
         <span>${it.qty}x</span>
         <em>${brl((wholesale ? p.atacado : p.varejo) * it.qty)}</em>
       </div>
@@ -498,7 +565,7 @@ function initCheckout(){
     const p = CATALOG[it.id];
     return `<div class="ck-prod">
       <div class="ph grain ${p.ph}">${p.img ? `<img src="${p.img[0]}" alt="">` : ""}</div>
-      <div><b>${p.name} · ${it.size} / ${p.cor.toUpperCase()}</b>
+      <div><b>${p.name} · ${it.size} / ${corDo(it).toUpperCase()}</b>
       <em>${brl((wholesale ? p.atacado : p.varejo) * it.qty)}</em>
       <span>Qtd: ${it.qty}</span></div></div>`;
   }).join('') || '<p style="font-size:13px;color:var(--muted)">Nenhum item na sacola.</p>';
@@ -570,6 +637,7 @@ function initFloats(){
       const v = (inp?.value || '').trim();
       if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){ Toast.show('E-mail inválido', 'Confira o endereço e tente de novo'); inp?.focus(); return; }
       const msg = `Olá, Wolfie! Quero receber as novidades e ofertas. Meu e-mail: ${v}`;
+      track('generate_lead', {method:'newsletter'});
       open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
       Toast.show('Quase lá', 'Confirme o envio no WhatsApp para entrar na lista');
       inp.value = '';
@@ -587,7 +655,8 @@ document.addEventListener('DOMContentLoaded', () => {
   Cart.paint(); renderCart(); initPolicy(); initCheckout();
 });
 
-window.WolfieCart = Cart;              // exposto para o frete.js e para debug
+window.WolfieCart = Cart;
+window.WolfieCor = corDo;            // cor do item da sacola              // exposto para o frete.js e para debug
 window.WolfieCatalog = CATALOG;        // preços e pesos
 window.WOLFIE_META_ATACADO = META_ATACADO;
 window.WolfieCheckout = checkoutWhatsApp; // pedido pelo WhatsApp
